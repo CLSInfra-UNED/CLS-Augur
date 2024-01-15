@@ -61,7 +61,7 @@ WHERE {
 """
     FEW_SHOT = ("## Some example user requests and corresponding SparQL queries are provided "
                 "based on similar problems:\n"
-                "## Answer the following: {question}\n\n ## Answ er:\n{query}\n\n"
+                "## Answer the following: {question}\n\n ## Answer:\n{query}\n\n"
             )
 
     COT_END = "Let's think step by step."

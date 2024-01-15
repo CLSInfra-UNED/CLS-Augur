@@ -9,6 +9,12 @@ EMB_MODEL_ID = "sentence-transformers/all-mpnet-base-v2"
 MAX_NEW_TOKENS = 1024
 TEMP = .01
 
+def capture_code(text): 
+    code_pattern = r'```(.*?)```'
+    code = re.findall(code_pattern, text, re.DOTALL)
+    return code
+
+              
 def main():
     dataset  = load_dataset('lc_quad')
 
@@ -21,8 +27,6 @@ def main():
     ontology_db = rag.GraphRag(EMB_MODEL_ID, ontology_files)
     queries_db = rag.SparQLRag(EMB_MODEL_ID, ontology_files)
 
-    
-
     query_pipeline = model.conversational_pipeline(MODEL_NAME, MAX_NEW_TOKENS)
 
     chat_code_agent = ctx.prompt_llama_code(ontology_db, queries_db)
@@ -31,8 +35,6 @@ def main():
     query = 'test'
     conversation = model.conversation_init(chat_code_agent, query)
     
-    code_pattern = r'```(.*?)```'
-    code = re.findall(code_pattern, query, re.DOTALL)
     
     ordered_list.append(query_pipeline(conversation,
                             do_sample=True,
