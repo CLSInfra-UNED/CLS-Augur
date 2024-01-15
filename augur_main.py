@@ -31,17 +31,24 @@ def main():
 
     chat_code_agent = ctx.prompt_llama_code(ontology_db, queries_db)
     ordered_list = []
+
     
-    query = 'test'
-    conversation = model.conversation_init(chat_code_agent, query)
-    
-    
-    ordered_list.append(query_pipeline(conversation,
-                            do_sample=True,
-                            top_k=10,
-                            temperature=TEMP,
-                            max_new_tokens=MAX_NEW_TOKENS,
-                            num_return_sequences=1))
+    combinations = [(bool(i & 4), bool(i & 2), bool(i & 1)) for i in range(8)]
+    for cot, few_s, rag_s in combinations:
+        for query in dataset['train']['question'][:100]:
+
+            conversation = model.conversation_init(chat_code_agent, 
+                                                query, 
+                                                few_shot=few_s,
+                                                cot=cot,
+                                                rag=rag_s)
+            
+            ordered_list.append(query_pipeline(conversation,
+                                    do_sample=True,
+                                    top_k=10,
+                                    temperature=TEMP,
+                                    max_new_tokens=MAX_NEW_TOKENS,
+                                    num_return_sequences=1))
 
 if __name__ == '__main__':
     main()
