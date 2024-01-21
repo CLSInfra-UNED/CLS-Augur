@@ -1,10 +1,14 @@
 import datetime 
 
+from abc import ABC, abstractmethod
+
 from functools import lru_cache
 from langchain.vectorstores import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings
 from rdflib import Graph
-from abc import ABC, abstractmethod
+from rdflib.namespace import RDFS
+
+
 
 @lru_cache(maxsize=1)
 def load_embedding_model(emb_model):
@@ -14,7 +18,7 @@ def load_embedding_model(emb_model):
 class RagBase(ABC):
     def __init__(self, emb_model_id):
         self.emb_model = load_embedding_model(emb_model_id)
-        self.unique_db_dir = f"../db/{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        self.unique_db_dir = f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
 
     @abstractmethod
@@ -37,6 +41,7 @@ class GraphRag(RagBase):
     def __init__(self, emb_model_id, file_list):
         super().__init__(emb_model_id)
         self.graph = Graph()
+        self.unique_db_dir = 'db_ontology/' + self.unique_db_dir
         self.rag = self.load_vector_db(file_list)
         
 
@@ -55,7 +60,7 @@ class GraphRag(RagBase):
         # all tripletswith a 'comment' predicate
         filtered_graph = (
             (subj, pred, obj) for subj, pred, obj in self.graph 
-            if 'comment' in pred.lower() #or 'label' in pred.lower()
+            if pred == RDFS.comment and obj.language == 'en'
             )
         node_list, metadata = [], []
         for subj, pred, obj in filtered_graph:
@@ -65,7 +70,8 @@ class GraphRag(RagBase):
         # Loads the triplets into the vector database
         db = Chroma.from_texts(node_list,
                             embedding = self.emb_model,
-                            metadatas = metadata)
+                            metadatas = metadata,
+                            persist_directory = self.unique_db_dir)
         
         return db
     
@@ -84,10 +90,14 @@ class GraphRag(RagBase):
 
         connected_graph = Graph()
         for subj, pred, obj in self.graph:
-            if subj in connected_nodes: connected_graph.add((subj, pred, obj))
+            if subj in connected_nodes: 
+                if (pred == RDFS.label and obj.language != 'en' or 
+                    pred == RDFS.comment and obj.language != 'en'): 
+                    continue
+                connected_graph.add((subj, pred, obj))
 
         for prefix, namespace in self.graph.namespaces(): 
-            connected_graph.bind(prefix, namespace) 
+            connected_graph.bind(prefix, namespace)
 
         return connected_graph
     
@@ -97,7 +107,8 @@ class GraphRag(RagBase):
         nodes = {document.metadata['subj'] for document in output}
         output = self._get_connected_nodes_and_prefixes(nodes)
         output = output.serialize(format = 'turtle')
-
+        # Add dbr prefix, as the OWL file does not contain the resource triples
+        output = "@prefix dbr: <http://dbpedia.org/resource/> .\n" + output
         return output
 
 
@@ -106,32 +117,49 @@ class SparQLRag(RagBase):
     WIP. This class is intended to implement the RAG to retrieve
     relevant samples for in-context learning.
     """
-    def __init__(self, emb_model_id, file_list):
+    def __init__(self, emb_model_id, queries, consults):
         super().__init__(emb_model_id)
-
-    def load_vector_db(emb_model, file_list):
-        #model_kwargs = {'device': 'cpu'}
-        pass
+        self.unique_db_dir = 'db_sparql/' + self.unique_db_dir
+        self.rag = self.load_vector_db(queries, consults)
+        
     
-    def process_query():
-        pass
+    def load_vector_db(self, queries, consults):
+        consults = [{'consult': element} for element in consults]
+        db = Chroma.from_texts(queries, 
+                               embedding = self.emb_model,
+                               metadatas = consults,
+                               persist_directory = self.unique_db_dir)
+        return db
+    
+    
+    def process_query(self, text, k = 3):
+        output = self.raw_rag_output(text, k)
+        output = [{'question' : document.page_content , 'metadata' : document.metadata} 
+                  for document in output]
+        return output
 
-    def raw_rag_output():
-        pass
+    
+    def raw_rag_output(self, text, k = 3):
+        return self.rag.similarity_search(text, include_metadata = True, k = k)
 
 
 if __name__ == "__main__":
     # TEST CASE
+    import pandas as pd
+    
     ontology_files = [
-    #"./datafiles/ontology.ttl",
-    #"./datafiles/ontology_poetry.ttl"
     './datafiles/dbpedia_2016-10.owl'
     ]
 
     model = "sentence-transformers/all-mpnet-base-v2"
 
-    ontology_db = GraphRag(model, ontology_files)
+    df_train = pd.read_json('datafiles/train-data.json')
 
+    ontology_db = GraphRag(model, ontology_files)
+    fewshot_db = SparQLRag(model, 
+                           df_train['corrected_question'].to_list(), 
+                           df_train['sparql_query'].to_list())
     print(ontology_db.process_query('give me all the authors that were born in the second century', 5))
+    print(fewshot_db.process_query('give me all the authors that were born in the second century', 5))
     print('done')
     

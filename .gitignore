@@ -2,8 +2,12 @@
 .env
 
 # RAG database 
-db/*
+db_sparql/*
+db_ontology/*
 
 # cache files
 Augur/__pycache__
 Notebooks/
+
+# results folder
+results
