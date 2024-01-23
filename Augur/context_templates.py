@@ -19,8 +19,8 @@ class PromptLlamaCode(PromptTemplate):
     
     COT = """
 ### Some example user requests and corresponding SparQL queries are provided based on similar problems to help you answer the last request:
-### ### Write the SparQL code that retrieves the answer to this request: How many movies did Stanley Kubrick direct?
-### Response:
+# Write the SparQL code that retrieves the answer to this request: How many movies did Stanley Kubrick direct?
+
 Let's think step by step, to create a SPARQL query from a natural language request:
 
 Step 1: Recognize Named Entities and Ontology Entities
@@ -54,7 +54,7 @@ WHERE {
         "### Some example user requests and corresponding SparQL queries are provided "
         "based on similar problems:\n"
     )
-    FEW_SHOT_TEMPLATE = "### Write the SparQL code that retrieves the answer to this request: {question}\n### Response:\n{consult}\n\n"
+    FEW_SHOT_TEMPLATE = "# Write the SparQL code that retrieves the answer to this request: {question}\n\n{consult}\n<|EOT|>\n\n"
 
     
     def __init__(self, schema_rag, sparql_rag):
@@ -65,7 +65,7 @@ WHERE {
         prompt = []
 
         if rag: prompt.append(self.SCHEMA.format(schema = self.schema_rag.process_query(user_query), k = 5))
-        
+       
         if few_s:
             fs_rag_output = self.sparql_rag.process_query(user_query)
             
@@ -82,7 +82,7 @@ WHERE {
         
         if chain_t: prompt.append(self.COT)
 
-        prompt.append(f"### Write the SparQL code that retrieves the answer to ONLY this request: {user_query}.\n### Response:\n")
+        prompt.append(f"# Write the SparQL code that retrieves the answer to ONLY this request: {user_query}.\n\n")
 
         if chain_t: prompt.append(self.COT_END)
 

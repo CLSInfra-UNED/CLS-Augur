@@ -7,7 +7,7 @@ db_ontology/*
 
 # cache files
 Augur/__pycache__
-Notebooks/
+Notebook/
 
 # results folder
 results

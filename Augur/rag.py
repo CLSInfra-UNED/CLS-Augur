@@ -37,7 +37,9 @@ class RagBase(ABC):
 
 
 class GraphRag(RagBase):
-
+    """
+    Class intended to manage the vector db for a Knowled Graph
+    """
     def __init__(self, emb_model_id, file_list):
         super().__init__(emb_model_id)
         self.graph = Graph()
@@ -111,10 +113,29 @@ class GraphRag(RagBase):
         output = "@prefix dbr: <http://dbpedia.org/resource/> .\n" + output
         return output
 
+    
+    def full_schema(self):
+        full_graph = Graph()
+        for subj, pred, obj in self.graph:
+            if (pred == RDFS.label and obj.language != 'en' or 
+                    pred == RDFS.comment and obj.language != 'en'): 
+                    continue
+            if ('#Class' in str(obj) or
+                '#Property' in str(obj) or
+                '#domain' in str(pred) or
+                '#range' in str(pred)):
+                full_graph.add((subj, pred, obj))
+        
+        for prefix, namespace in self.graph.namespaces(): 
+            full_graph.bind(prefix, namespace)
+        
+        full_graph = full_graph.serialize(format = 'turtle')
+        return "@prefix dbr: <http://dbpedia.org/resource/> .\n" + full_graph
+    
 
 class SparQLRag(RagBase):
     """
-    WIP. This class is intended to implement the RAG to retrieve
+    This class is intended to implement the RAG to retrieve
     relevant samples for in-context learning.
     """
     def __init__(self, emb_model_id, queries, consults):

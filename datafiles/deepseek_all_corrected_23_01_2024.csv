@@ -1,0 +1,581 @@
+Unnamed: 0,consult,output
+0,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+1,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?sect
+WHERE {
+ ?party a dbo:PoliticalParty.
+ ?party dbo:partyOf dbr:International_Muslim_Brotherhood.
+ ?member dbo:memberOf?party.
+ ?member dbo:religion?sect.
+}
+","{'head': {'link': [], 'vars': ['sect']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+2,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+3,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+4,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK {
+  dbr:Peter_Piper_Pizza dbo:industry?industry
+}
+","{'head': {'link': []}, 'boolean': True}"
+5,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+6,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+7,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+8,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+9,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+10,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+11,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+12,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?battle)
+WHERE {
+ ?battle dbo:battle?militaryPerson.
+ ?battle dbo:battle dbr:World_War_II.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '43060'}}]}}"
+13,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?broadcaster
+WHERE {
+ ?broadcaster dbo:parentOrganization dbr:Comcast.
+}
+","{'head': {'link': [], 'vars': ['broadcaster']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+14,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK {
+  dbr:William_H_Blanchard dbo:placeOfBurial dbr:Colorado.
+}
+","{'head': {'link': []}, 'boolean': False}"
+15,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+16,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?state
+WHERE {
+  dbr:Channel_(TV_station) dbo:state?state.
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 9: syntax error at \'TV_station\' before \')\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nPREFIX dbo: <http://dbpedia.org/ontology/>\\nPREFIX dbr: <http://dbpedia.org/resource/>\\n\\nSELECT DISTINCT?state\\nWHERE {\\n  dbr:Channel_(TV_station) dbo:state?state.\\n}\\n""']"
+17,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+18,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+19,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+20,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+21,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?award
+WHERE {
+ ?award dbo:director dbr:Saraband.
+}
+","{'head': {'link': [], 'vars': ['award']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+22,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+23,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?routeEnd
+WHERE {
+ ?routeEnd dbo:routeEnd dbr:Birmingham_and_Oxford_Junction_Railway.
+}
+","{'head': {'link': [], 'vars': ['routeEnd']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+24,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?origin
+WHERE {
+ ?grape dbo:species dbr:Vitis_vinifera.
+ ?grape dbo:origin?origin.
+}
+","{'head': {'link': [], 'vars': ['origin']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Georgia_(country)'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Croatia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Spain'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Hungary'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/France'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Germany'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lauffen_am_Neckar'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Portugal'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Austria'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Klosterneuburg'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Geisenheim'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Switzerland'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Italy'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Greece'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bosnia_and_Herzegovina'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/California'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Czechoslovakia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Moravia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Refosco'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Slovenia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Friuli-Venezia_Giulia_wine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cyprus'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Republic_of_Macedonia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lorraine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rhine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Romania'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Moldova'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ukraine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Serbia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bulgaria'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Moldavia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Palatinate_(wine_region)'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sicily'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Alzey'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Franconia_(wine_region)'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Transylvania'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Randersacker'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ardèche'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Siebeldingen'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/German_wine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Austria-Hungary'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Argentina'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/French_wine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Santorini'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Italian_wine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Egypt'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Freiburg_im_Breisgau'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Thurgau'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bordeaux_wine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/South_West_France_(wine_region)'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/United_States'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Turkey'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/South_Africa'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Alsace_wine'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Burgundy'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Montferrat'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Loire'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Montpellier'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Slovakia'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Province_of_Verona'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Province_of_Vicenza'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maissau'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Weinsberg'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jura_(department)'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Central_Europe'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rheingau'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Palatinate_(region)'}}, {'origin': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Israel'}}]}}"
+25,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?person)
+WHERE {
+ ?child dbo:deathPlace dbr:Indiana.
+ ?child dbo:parent?person.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '7'}}]}}"
+26,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+27,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?river
+WHERE {
+ ?river dbo:source dbr:Lake_Ontario.
+}
+","{'head': {'link': [], 'vars': ['river']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'river': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Saint_Lawrence_River'}}]}}"
+28,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+29,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?religion
+WHERE {
+  dbr:Emel_Magazine dbo:foundedBy?person.
+ ?person dbo:religion?religion.
+}
+","{'head': {'link': [], 'vars': ['religion']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+30,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+31,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?city)
+WHERE {
+ ?city dbo:isLocatedNear?sea.
+ ?sea dbo:isPartOf dbr:Fig_Tree_Bay.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+32,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+33,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+34,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+35,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+36,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?location
+WHERE {
+  dbr:Dubai_World_Cup dbo:location?location.
+}
+","{'head': {'link': [], 'vars': ['location']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'location': {'type': 'uri', 'value': 'http://dbpedia.org/resource/United_Arab_Emirates'}}, {'location': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dubai'}}, {'location': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Meydan_Racecourse'}}]}}"
+37,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?owner
+WHERE {
+ ?newspaper dbo:founder dbr:Nehru.
+ ?newspaper dbo:owner?owner.
+}
+","{'head': {'link': [], 'vars': ['owner']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+38,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?place
+WHERE {
+ ?airline dbo:headquarters?place.
+ ?flight dbo:operatedBy?airline.
+ ?place dbo:country dbr:United_Kingdom.
+}
+","{'head': {'link': [], 'vars': ['place']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+39,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?magazine
+WHERE {
+ ?magazine dbo:founder dbr:Ralph_J._Gleason.
+}
+","{'head': {'link': [], 'vars': ['magazine']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'magazine': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rolling_Stone'}}]}}"
+40,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK {
+  dbr:USS_Marmora_(IX-189) dbo:shipBuilder dbr:Seattle.
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 8: syntax error at \'IX\' before \'-\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nPREFIX dbo: <http://dbpedia.org/ontology/>\\nPREFIX dbr: <http://dbpedia.org/resource/>\\n\\nASK {\\n  dbr:USS_Marmora_(IX-189) dbo:shipBuilder dbr:Seattle.\\n}\\n""']"
+41,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK {
+  dbr:Albania dbo:largestCity dbr:Tirana.
+}
+","{'head': {'link': []}, 'boolean': True}"
+42,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?city
+WHERE {
+ ?beverage dbo:related dbr:Barq.
+ ?beverage dbo:location?city.
+}
+","{'head': {'link': [], 'vars': ['city']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+43,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+44,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+45,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?debutWork
+WHERE {
+  dbr:Whitney_Wistert dbo:debutWork?debutWork.
+}
+","{'head': {'link': [], 'vars': ['debutWork']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+46,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+47,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?show)
+WHERE {
+ ?show dbo:channel dbr:Fox_Broadcasting_Company.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '163'}}]}}"
+48,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?river
+WHERE {
+ ?river dbo:mouthLocation dbr:Arctic_Ocean.
+ ?river dbo:mouthLocation dbr:Laptev_Sea.
+}
+","{'head': {'link': [], 'vars': ['river']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+49,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?war
+WHERE {
+ ?leader a dbo:Leader ;
+          dbo:opponents?war.
+  FILTER(?leader = dbr:Chung_Il_Kwon)
+}
+","{'head': {'link': [], 'vars': ['war']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+50,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+51,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+52,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?member
+WHERE {
+ ?member dbo:role dbr:Air_interdiction.
+}
+","{'head': {'link': [], 'vars': ['member']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+53,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?member
+WHERE {
+ ?member dbo:currentMembers dbr:Insects_vs_Robots.
+}
+","{'head': {'link': [], 'vars': ['member']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+54,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK {
+  dbr:Ombla dbo:country dbr:Croatia.
+}
+","{'head': {'link': []}, 'boolean': True}"
+55,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?person
+WHERE {
+ ?person dbo:hometown dbr:Greater_Napanee.
+}
+","{'head': {'link': [], 'vars': ['person']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'person': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Avril_Lavigne'}}, {'person': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Deryck_Whibley'}}]}}"
+56,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+57,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?nationalteam
+WHERE {
+  dbr:Trn_Vit_Hng dbo:nationalteam?nationalteam.
+}
+","{'head': {'link': [], 'vars': ['nationalteam']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+58,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?designer
+WHERE {
+ ?designer dbo:designer dbr:Renfe.
+ ?designer dbo:owner dbr:Renaissance_Center.
+}
+","{'head': {'link': [], 'vars': ['designer']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+59,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?uni
+WHERE {
+  dbr:Joshua_A._Siegel dbo:almaMater?uni.
+}
+","{'head': {'link': [], 'vars': ['uni']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+60,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?book)
+WHERE {
+ ?book dbo:author dbr:Novelas_Ejemplares.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+61,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?river
+WHERE {
+ ?river dbo:sourcePlace dbr:Essex.
+}
+","{'head': {'link': [], 'vars': ['river']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+62,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?division
+WHERE {
+ ?company dbo:foundedIn dbr:Taiwan.
+ ?company dbo:hasDivision?division.
+}
+","{'head': {'link': [], 'vars': ['division']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+63,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+64,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+65,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?city
+WHERE {
+  dbr:David_W._Brown_House dbo:nearestCity?city.
+}
+","{'head': {'link': [], 'vars': ['city']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'city': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Colorado'}}, {'city': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Arapahoe_County,_Colorado'}}, {'city': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Englewood,_Colorado'}}]}}"
+66,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?debut
+WHERE {
+  dbr:Deion_Sanders dbo:debut?debut.
+}
+","{'head': {'link': [], 'vars': ['debut']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+67,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?city
+WHERE {
+ ?city dbo:nearestCity dbr:Fountain_Lake_Farm.
+}
+","{'head': {'link': [], 'vars': ['city']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+68,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?character
+WHERE {
+  dbr:Batman_Live dbo:characters?character.
+}
+","{'head': {'link': [], 'vars': ['character']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+69,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?artist
+WHERE {
+ ?artist dbo:training dbr:San_Francisco_Art_Institute.
+}
+","{'head': {'link': [], 'vars': ['artist']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peter_Forakis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rinaldo_Cuneo'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/America_Meredith'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Carlos_Vierra'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Robert_Graham_(sculptor)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Thom_Merrick'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/William_T._Wiley'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jim_Franklin_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Helen_Hyde'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Reminisce_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/David_Ireland_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/James_Zar'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Robert_H._Hudson'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ernest_Peixotto'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ralph_Stackpole'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Tullio_DeSantis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ray_Strong'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Renata_Bernal'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Suzanne_Bocanegra'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/William_Anthony_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sonia_Gechtoff'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lin_Evola'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Michael_Heizer'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/T._C._Cannon'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ronnie_Landfield'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jason_Rhoades'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Paul_McCarthy'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gregory_Gillespie'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Karl_Kasten'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Annie_Leibovitz'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gladys_Rockmore_Davis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Joan_Brown'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peter_Kovál'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Manuel_Neri'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peter_Reginato'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ronald_Davis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Megan_Wilson'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sarah_Cain'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Daniela_Franco'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gutzon_Borglum'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ian_Alan_Paul'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jerome_Caja'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Emily_Carr'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/David_Park_(painter)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jess_Collins'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Harrell_Fletcher'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Arthur_Frank_Mathews'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Xavier_Martínez'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Deborah_Remington'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Neil_Williams_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Alice_Brown_Chittenden'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Adolph_Treidler'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lynn_Marie_Kirby'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Carlos_Villa'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kenn_Davis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kevin_Larmee'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Phoebe_Man'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Edith_Heath'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Adelaide_Hanscom_Leeson'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Steve_Lambert'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vena_Kava'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Doris_Lee'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Honoré_Desmond_Sharrer'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rowena_Meeks_Abdy'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mario_Martinez_(painter)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Linda_Lomahaftewa'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Walter_Kuhlman'}}]}}"
+70,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+71,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?country
+WHERE {
+ ?country dbo:currency dbr:Aureus.
+}
+","{'head': {'link': [], 'vars': ['country']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'country': {'type': 'uri', 'value': 'http://dbpedia.org/resource/History_of_the_Roman_Empire'}}, {'country': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Roman_Empire'}}]}}"
+72,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?award
+WHERE {
+ ?award dbo:givenTo dbr:A._Peter_Dewey.
+}
+","{'head': {'link': [], 'vars': ['award']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+73,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+74,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?software
+WHERE {
+ ?software dbo:developer dbr:John_Fanning_(businessman).
+ ?software a <http://dbpedia.org/ontology/Software>
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 9: syntax error at \'(\' before \'businessman\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nPREFIX dbo: <http://dbpedia.org/ontology/>\\nPREFIX dbr: <http://dbpedia.org/resource/>\\n\\nSELECT DISTINCT?software\\nWHERE {\\n ?software dbo:developer dbr:John_Fanning_(businessman).\\n ?software a <http://dbpedia.org/ontology/Software>\\n}\\n""']"
+75,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?award)
+WHERE {
+ ?award dbo:award dbr:Muhammad_Yunus.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+76,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?band
+WHERE {
+ ?band dbo:label dbr:Motown.
+}
+","{'head': {'link': [], 'vars': ['band']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+77,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+78,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?unit)
+WHERE {
+ ?unit dbo:garrison dbr:Arlington_County,_Virginia.
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 9: syntax error at \'_Virginia\' before \'.\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nPREFIX dbo: <http://dbpedia.org/ontology/>\\nPREFIX dbr: <http://dbpedia.org/resource/>\\n\\nSELECT DISTINCT COUNT(?unit)\\nWHERE {\\n ?unit dbo:garrison dbr:Arlington_County,_Virginia.\\n}\\n""']"
+79,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?religion
+WHERE {
+  dbr:Kwai_Chang_Caine dbo:religion?religion.
+}
+","{'head': {'link': [], 'vars': ['religion']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'religion': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Buddhism'}}]}}"
+80,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+81,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?legislature
+WHERE {
+ ?legislature dbo:leader dbr:Pullaiahgaripalli.
+}
+","{'head': {'link': [], 'vars': ['legislature']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+82,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?railwayLine
+WHERE {
+ ?railwayLine dbo:servingRailwayLine dbr:Daund_Junction_railway_station.
+ ?film dbo:productionCompany dbr:Film99.
+ ?film dbo:location?location.
+ ?location dbo:railwayStation?railwayLine.
+}
+","{'head': {'link': [], 'vars': ['railwayLine']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+83,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?ethnicity
+WHERE {
+  dbr:Riley_Reid dbo:ethnicity?ethnicity.
+}
+","{'head': {'link': [], 'vars': ['ethnicity']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Chickasaw'}}, {'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Puerto_Ricans_in_the_United_States'}}, {'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cherokee'}}, {'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dominican_Americans_(Dominican_Republic)'}}, {'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Irish_Americans'}}, {'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/German_Americans'}}, {'ethnicity': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dutch_Americans'}}]}}"
+84,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?show
+WHERE {
+ ?show dbo:subsidiary dbr:Viacom_Productions.
+}
+","{'head': {'link': [], 'vars': ['show']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'show': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Paramount_Television'}}]}}"
+85,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+86,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?university
+WHERE {
+ ?university dbo:campus dbr:Mount_Moosilauke.
+}
+","{'head': {'link': [], 'vars': ['university']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'university': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dartmouth_College'}}]}}"
+87,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?religion)
+WHERE {
+ ?religion dbo:architecturalStyle dbr:Sanggar_Agung.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+88,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?thing)
+WHERE {
+ ?thing dbo:programmingLanguage dbr:C++.
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 9: syntax error at \'+\' before \'+\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nPREFIX dbo: <http://dbpedia.org/ontology/>\\nPREFIX dbr: <http://dbpedia.org/resource/>\\n\\nSELECT DISTINCT COUNT(?thing)\\nWHERE {\\n ?thing dbo:programmingLanguage dbr:C++.\\n}\\n""']"
+89,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+90,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+91,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+92,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK WHERE {
+  dbr:Don_t_Bring_Me_Down dbo:recorded?location.
+ ?location dbr:West_Germany.
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 9: syntax error at \'.\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nPREFIX dbo: <http://dbpedia.org/ontology/>\\nPREFIX dbr: <http://dbpedia.org/resource/>\\n\\nASK WHERE {\\n  dbr:Don_t_Bring_Me_Down dbo:recorded?location.\\n ?location dbr:West_Germany.\\n}\\n""']"
+93,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?city
+WHERE {
+ ?river dbo:mouthMountain dbr:Montauk_State_Park.
+ ?river dbo:city?city.
+}
+","{'head': {'link': [], 'vars': ['city']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+94,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT COUNT(?ideology)
+WHERE {
+ ?ideology dbo:party dbr:Boonchu_Rojanastien.
+}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+95,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+96,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+97,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+ASK {
+  dbr:Henry_David_Thoreau dbo:mainInterests dbr:Politics.
+}
+","{'head': {'link': []}, 'boolean': False}"
+98,None,"['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 3: syntax error at \'None\' before \'}\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\nNone""']"
+99,"
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT?country
+WHERE {
+ ?country dbo:leader dbr:Giuseppe_Bertello.
+}
+","{'head': {'link': [], 'vars': ['country']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'country': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Pontifical_Commission_for_Vatican_City_State'}}, {'country': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vatican_City'}}]}}"

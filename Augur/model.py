@@ -104,6 +104,30 @@ def _get_tokenizer_with_system_prompt(model_id):
             "{% endfor %}"
             )
     
+    if 'deepseek' in model_id:
+        tokenizer.chat_template = (
+            "{% if not add_generation_prompt is defined %}\n"
+            "{% set add_generation_prompt = false %}\n"
+            "{% endif %}\n{%- set ns = namespace(found=false) -%}\n"
+            "{%- for message in messages -%}\n"
+            "{%- if message['role'] == 'system' -%}\n"
+            "{%- set ns.found = true -%}\n"
+            "{%- endif -%}\n{%- endfor -%}\n{{bos_token}}"
+            "{%- if not ns.found -%}\n"
+            "{{'You are an AI programming assistant, utilizing the Deepseek Coder model, developed by Deepseek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer\\n'}}\n"
+            "{%- endif %}\n{%- for message in messages %}\n"
+            "{%- if message['role'] == 'system' %}\n{{ message['content'] }}\n"
+            "{%- else %}\n"
+            "{%- if message['role'] == 'user' %}\n"
+            "{{'### Instruction:\\n' + message['content'] + '\\n'}}\n "
+            "{%- else %}\n{{'### Response:\\n' + message['content'] + '\\n<|EOT|>\\n'}}\n"
+            "{%- endif %}\n"
+            "{%- endif %}\n"
+            "{%- endfor %}\n"
+            "{% if add_generation_prompt %}\n"
+            "{{'### Response:'}}\n"
+            "{% endif %}"
+        )
     return tokenizer
 
 

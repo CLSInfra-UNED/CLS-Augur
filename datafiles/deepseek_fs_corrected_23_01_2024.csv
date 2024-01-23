@@ -1,0 +1,406 @@
+Unnamed: 0,consult,output
+0,"
+SELECT DISTINCT?uri WHERE {
+ ?uri <http://dbpedia.org/property/architect> <http://dbpedia.org/resource/Marine_Corps_Air_Station_Kaneohe_Bay>.
+ ?uri <http://dbpedia.org/property/tenant> <http://dbpedia.org/resource/New_Sanno_Hotel>.
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+1,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/party> <http://dbpedia.org/resource/International_Muslim_Brotherhood>.?x <http://dbpedia.org/property/sect>?uri . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+2,"
+SELECT DISTINCT?uri WHERE { 
+   ?uri <http://dbpedia.org/ontology/developer>?dev.
+   ?dev <http://dbpedia.org/property/nationality> ""United States"".
+   ?uri <http://dbpedia.org/ontology/author>?auth.
+   ?auth <http://dbpedia.org/property/nationality> ""United States"".
+    FILTER (str(?uri) = ""http://dbpedia.org/resource/Google_Videos"" || str(?uri) = ""http://dbpedia.org/resource/Google_Web_Toolkit"")
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+3,"
+SELECT DISTINCT?uri WHERE {
+ ?uri <http://dbpedia.org/property/developer> <http://dbpedia.org/resource/Sam_Loyd>.
+ ?uri <http://dbpedia.org/property/publisher> <http://dbpedia.org/resource/Eric_Schiller>.
+ ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/VideoGame>.
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+4,"
+ASK WHERE { <http://dbpedia.org/resource/Peter_Piper_Pizza> <http://dbpedia.org/ontology/industry> <http://dbpedia.org/resource/Pizza> }
+","{'head': {'link': []}, 'boolean': True}"
+5,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/associatedMusicalArtist> <http://dbpedia.org/resource/Joe_Pass>.?uri <http://dbpedia.org/ontology/musicalWork> <http://dbpedia.org/resource/Dream_Dancing> }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+6,"
+SELECT DISTINCT?uri WHERE {
+ ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/OfficeHolder>.
+ ?uri <http://dbpedia.org/property/deputy>?deputy.
+  {?deputy <http://dbpedia.org/resource/Neil_Brown_(Australian_politician)>}
+  UNION
+  {?deputy <http://dbpedia.org/resource/Andrew_Peacock>}
+}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 7: syntax error at \'}\' before \'UNION\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nSELECT DISTINCT?uri WHERE {\\n ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/OfficeHolder>.\\n ?uri <http://dbpedia.org/property/deputy>?deputy.\\n  {?deputy <http://dbpedia.org/resource/Neil_Brown_(Australian_politician)>}\\n  UNION\\n  {?deputy <http://dbpedia.org/resource/Andrew_Peacock>}\\n}\\n""']"
+7,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Focke-Wulf_260> <http://dbpedia.org/property/nationalOrigin>?uri. <http://dbpedia.org/resource/Start_+_Flug_H-101> <http://dbpedia.org/property/nationalOrigin>?uri. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+8,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/producer> <http://dbpedia.org/resource/Stephen_E._Ambrose>.?uri <http://dbpedia.org/property/writer> <http://dbpedia.org/resource/Erik_Jendresen> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/TelevisionShow>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Band_of_Brothers_(miniseries)'}}]}}"
+9,"
+SELECT DISTINCT?uri WHERE {
+  { <http://dbpedia.org/resource/Women_in_the_Garden> <http://dbpedia.org/property/artist>?uri }
+  UNION
+  { <http://dbpedia.org/resource/L'Enfant_à_la_Tasse> <http://dbpedia.org/property/composer>?uri }
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Claude_Monet'}}]}}"
+10,"
+SELECT DISTINCT?uri WHERE { 
+   ?uri <http://dbpedia.org/property/participants>?horse1.
+   ?uri <http://dbpedia.org/property/participants>?horse2.
+   ?horse1 <http://dbpedia.org/property/race>?race1.
+   ?horse2 <http://dbpedia.org/property/race>?race2.
+   ?horse1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Horse>.
+   ?horse2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Horse>.
+    FILTER (str(?race1) = str(?race2)).
+    FILTER (str(?horse1) = ""Fergie Sutherland"" || str(?horse2) = ""Fergie Sutherland"").
+    FILTER (str(?horse1) = ""War of Attributes"" || str(?horse2) = ""War of Attributes"").
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+11,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/network> <http://dbpedia.org/resource/Prime_Time_Entertainment_Network>.?uri <http://dbpedia.org/property/artist> <http://dbpedia.org/resource/Christopher_Franke> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/TelevisionShow>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Babylon_5'}}]}}"
+12,"
+SELECT DISTINCT COUNT(?uri) WHERE {?x <http://dbpedia.org/property/battles> <http://dbpedia.org/resource/World_War_II>.?x <http://dbpedia.org/property/battles>?uri .?x <http://www.w3.org/1999/02-rdf-syntax-ns#type> <http://dbpedia.org/ontology/MilitaryPerson>}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+13,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/network>?x.?x <http://dbpedia.org/property/parentOrganization> <http://dbpedia.org/resource/Comcast> }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+14,"
+ASK WHERE { <http://dbpedia.org/resource/William_H_Blanchard> <http://dbpedia.org/property/placeofburial> <http://dbpedia.org/resource/Colorado> }
+","{'head': {'link': []}, 'boolean': False}"
+15,"
+SELECT?uri WHERE { <http://dbpedia.org/resource/Vishwajyot_High_School> <http://dbpedia.org/ontology/sport>?uri.?uri <http://dbpedia.org/ontology/genre> ""Battle chess"" }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+16,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/district> <http://dbpedia.org/resource/Channel_(district)>.?x <http://dbpedia.org/ontology/state>?uri . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+17,"
+SELECT DISTINCT?uri WHERE {
+  {?uri <http://dbpedia.org/property/mission> <http://dbpedia.org/resource/Apollo_11>}
+  UNION
+  {?uri <http://dbpedia.org/property/mission> <http://dbpedia.org/resource/Gemini_8>}
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Neil_Armstrong'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Buzz_Aldrin'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Michael_Collins_(astronaut)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/David_Scott'}}]}}"
+18,"
+SELECT DISTINCT COUNT(?uri) WHERE {?x <http://dbpedia.org/property/tenants> <http://dbpedia.org/resource/Raptors_905>.?x <http://dbpedia.org/property/tenants>?uri. FILTER(?uri!= <http://dbpedia.org/resource/Raptors_905>)}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+19,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/officialWebsite> <http://www.dzogchenponolop.com> }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+20,"
+SELECT DISTINCT?owner WHERE { 
+   ?tunnel <http://dbpedia.org/ontology/operatedBy> <http://dbpedia.org/resource/Massachusetts_Department_of_Transportation>.
+   ?tunnel <http://dbpedia.org/property/owner>?owner.
+   ?tunnel <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/RoadTunnel>.
+}
+","{'head': {'link': [], 'vars': ['owner']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'owner': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Massachusetts'}}]}}"
+21,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Saraband_(film)> <http://dbpedia.org/ontology/director>?x.?x <http://dbpedia.org/property/awards>?uri . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+22,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/vicePresident> <http://dbpedia.org/resource/Enrique_José_Vargas_Varona>.?x <http://dbpedia.org/ontology/almaMater>?uri . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+23,"
+ SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Birmingham_and_Oxford_Junction_Railway> <http://dbpedia.org/ontology/routeEnd>?uri } 
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Birmingham'}}]}}"
+24,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/species> <http://dbpedia.org/resource/Vitis_vinifera>.?x <http://dbpedia.org/ontology/origin>?uri . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Georgia_(country)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Croatia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Spain'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Hungary'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/France'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Germany'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lauffen_am_Neckar'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Portugal'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Austria'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Klosterneuburg'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Geisenheim'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Switzerland'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Italy'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Greece'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bosnia_and_Herzegovina'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/California'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Czechoslovakia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Moravia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Refosco'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Slovenia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Friuli-Venezia_Giulia_wine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cyprus'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Republic_of_Macedonia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lorraine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rhine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Romania'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Moldova'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ukraine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Serbia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bulgaria'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Moldavia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Palatinate_(wine_region)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sicily'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Alzey'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Franconia_(wine_region)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Transylvania'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Randersacker'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ardèche'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Siebeldingen'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/German_wine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Austria-Hungary'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Argentina'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/French_wine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Santorini'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Italian_wine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Egypt'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Freiburg_im_Breisgau'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Thurgau'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bordeaux_wine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/South_West_France_(wine_region)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/United_States'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Turkey'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/South_Africa'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Alsace_wine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Burgundy'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Montferrat'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Loire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Montpellier'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Slovakia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Province_of_Verona'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Province_of_Vicenza'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maissau'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Weinsberg'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jura_(department)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Central_Europe'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rheingau'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Palatinate_(region)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Israel'}}]}}"
+25,"
+SELECT DISTINCT COUNT(?uri) WHERE {?x <http://dbpedia.org/ontology/deathPlace> <http://dbpedia.org/resource/Indiana>.?uri <http://dbpedia.org/ontology/child>?x . }
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '10'}}]}}"
+26,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/William_French_Smith> <http://dbpedia.org/property/branch>?uri.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/MilitaryUnit>.?uri <http://dbpedia.org/property/branch> <http://dbpedia.org/resource/Pierre_R. Graham>}
+","['output error: QueryBadFormed: A bad request has been sent to the endpoint: probably the SPARQL query is badly formed. \n\nResponse:\nb""Virtuoso 37000 Error SP030: SPARQL compiler, line 4: syntax error at \'<\' before \'http:\'\\n\\nSPARQL query:\\ndefine sql:big-data-const 0\\n#output-format:application/sparql-results+json\\n\\nSELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/William_French_Smith> <http://dbpedia.org/property/branch>?uri.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/MilitaryUnit>.?uri <http://dbpedia.org/property/branch> <http://dbpedia.org/resource/Pierre_R. Graham>}\\n""']"
+27,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/source> <http://dbpedia.org/resource/Lake_Ontario> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Saint_Lawrence_River'}}]}}"
+28,"
+SELECT DISTINCT?locationCity WHERE {
+  <http://dbpedia.org/resource/Denver_Broncos> <http://dbpedia.org/ontology/locationCity>?locationCity.
+  <http://dbpedia.org/resource/Steven_Clark_Cunningham> <http://dbpedia.org/property/placeOfBirth>?locationCity.
+}
+","{'head': {'link': [], 'vars': ['locationCity']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+29,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/founder> <http://dbpedia.org/resource/Emel_Magazine>.?x <http://dbpedia.org/property/religion>?uri . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+30,"
+SELECT DISTINCT?manager WHERE {
+  {
+   ?team <http://dbpedia.org/property/managerclubs> <http://dbpedia.org/resource/England_national_under-20_football_team>.
+   ?team <http://dbpedia.org/property/manager>?manager.
+  }
+  UNION
+  {
+   ?team <http://dbpedia.org/property/managerclubs> <http://dbpedia.org/resource/England_national_under-21_football_team>.
+   ?team <http://dbpedia.org/property/manager>?manager.
+  }
+}
+","{'head': {'link': [], 'vars': ['manager']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+31,"
+SELECT DISTINCT COUNT(?uri) WHERE {?uri <http://dbpedia.org/ontology/isPartOf> <http://dbpedia.org/resource/Fig_Tree_Bay>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+32,"
+ASK WHERE { <http://dbpedia.org/resource/Blue_Lagoon_Island> <http://dbpedia.org/property/archipelago> <http://dbpedia.org/resource/The_Bahamas> }
+","{'head': {'link': []}, 'boolean': True}"
+33,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/distributor> <http://dbpedia.org/resource/RKO_Pictures>.?uri <http://dbpedia.org/ontology/musicComposer> <http://dbpedia.org/resource/Bernard_Herrmann> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Film>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/On_Dangerous_Ground'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Devil_and_Daniel_Webster_(film)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Citizen_Kane'}}]}}"
+34,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/mergedWith> <http://dbpedia.org/resource/One_Israel_party>.?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Party>. FILTER(STR(?x) = ""http://dbpedia.org/resource/New_Way_party"")}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+35,"
+SELECT (COUNT(DISTINCT?uri) AS?count) WHERE { 
+ ?x <http://dbpedia.org/ontology/firstDriver> <http://dbpedia.org/resource/Damon_Hill>. 
+ ?x <http://dbpedia.org/ontology/poleDriver>?uri. 
+ ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/GrandPrix>
+}
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '9'}}]}}"
+36,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/occupation> <http://dbpedia.org/resource/Jockey>.?x <http://dbpedia.org/property/residence>?uri.?x <http://dbpedia.org/property/nationality> <http://dbpedia.org/resource/United_Arab_Emirates> }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+37,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/founder> <http://dbpedia.org/resource/Bhagat_Singh_Mookher_Jee>.?uri <http://dbpedia.org/property/owners>?x .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Newspaper>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+38,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/headquarters>?hq.?hq <http://dbpedia.org/ontology/country> <http://dbpedia.org/resource/United_Kingdom>.?x <http://dbpedia.org/property/destinations>?uri .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Place>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Crookes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Manchester'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sheffield'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peterborough'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ipswich'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Europe'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Hong_Kong'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/London'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Los_Angeles'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Paris'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Shanghai'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sydney'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/North_America'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Oxford'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Northampton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cranfield'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wootton,_Bedfordshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Guildford'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Brighton_and_Hove'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lewes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Preston,_Lancashire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Woodhouse,_South_Yorkshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Heathrow_Airport'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kingston_upon_Thames'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bradford'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Warrington'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Liverpool'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/British_Isles'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Portsmouth'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Stretford'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Morden'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wythenshawe'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Hadleigh,_Suffolk'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bluewater_(shopping_centre)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dartford'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Chesterfield'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cambridge'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/St_Ives,_Cambridgeshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/St_Neots'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Debenham'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/New_York'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Abu_Dhabi'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Budapest'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Las_Vegas'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Miami'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Muscat,_Oman'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Philadelphia'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/San_Francisco'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vienna'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Abingdon-on-Thames'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Luton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Milton_Keynes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Shoreham-by-Sea'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wigan'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dore_and_Totley'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/United_Kingdom'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Staines-upon-Thames'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Leeds'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/York'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dewsbury'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Darlington'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Widnes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Reading,_Berkshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Stalybridge'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dorking'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kirkbymoorside'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rotherham'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Framlingham'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Stowmarket'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bury_St_Edmunds'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Washington,_D.C.'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dubai'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Banbury'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Flitwick'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Hitchin'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Northallerton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Thirsk'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Richmond,_North_Yorkshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/St_Helens,_Merseyside'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Runcorn'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Southampton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Weymouth,_Dorset'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Fareham'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wallingford,_Oxfordshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Buxton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Baslow'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Hyde,_Greater_Manchester'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Middleton,_Greater_Manchester'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Oldham'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Altrincham'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ashton-under-Lyne'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/New_Ferry'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Seacombe'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cobham,_Surrey'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Epsom'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Colchester'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gravesend'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Glossop'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Norwich'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Scarborough,_North_Yorkshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Derby'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Huntingdon'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Istanbul'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Didcot'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wantage'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bicester'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Witney'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Biggleswade'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rushden'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sandy,_Bedfordshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Steyning'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Eastbourne'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Royal_Tunbridge_Wells'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Southport'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Blackpool'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Yorkshire_Dales'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gosport'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bakewell'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Matlock,_Derbyshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Stockport'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rochdale'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/New_Brighton,_Merseyside'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Birkenhead'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sutton,_London'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bolton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Capel_St._Mary'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Holbrook,_Suffolk'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ebbsfleet_International_railway_station'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Manchester_Airport'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Macclesfield'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ashbourne,_Derbyshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Long_Stratton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Middlesbrough'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Stockton-on-Tees'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Diss'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kidlington'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Carterton,_Oxfordshire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Chipping_Norton'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Woking'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/East_Bergholt'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Pickering,_North_Yorkshire'}}]}}"
+39,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/founder> <http://dbpedia.org/resource/Ralph_J._Gleason> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Magazine>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rolling_Stone'}}]}}"
+40,"
+ASK WHERE { <http://dbpedia.org/resource/USS_Marmora_(IX-189)> <http://dbpedia.org/property/shipBuilder> <http://dbpedia.org/resource/Seattle> }
+","{'head': {'link': []}, 'boolean': True}"
+41,"
+ASK WHERE { <http://dbpedia.org/resource/Albania> <http://dbpedia.org/ontology/largestCity> <http://dbpedia.org/resource/Tirana> }
+","{'head': {'link': []}, 'boolean': True}"
+42,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/related> <http://dbpedia.org/resource/Barq%27s_Beer>.?x <http://dbpedia.org/property/locationCity>?uri .?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Beverage>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+43,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Vostok_programmer> <http://dbpedia.org/ontology/associatedAstronaut>?x.?x <http://dbpedia.org/ontology/birthPlace>?uri. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+44,"
+SELECT DISTINCT COUNT(?uri) WHERE {?uri <http://dbpedia.org/property/education>?x.?x <http://dbpedia.org/ontology/campus> <http://dbpedia.org/resource/Suburb>. }
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '1120'}}]}}"
+45,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Whitney_Wistert> <http://dbpedia.org/property/debut>?uri. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+46,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/successor> <http://dbpedia.org/resource/Dragimir_of_Travunia_and_Zachlumia>.?uri <http://dbpedia.org/property/majorShrine>?majorShrine}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jovan_Vladimir'}}]}}"
+47,"
+SELECT (COUNT(?show) AS?count) WHERE {
+ ?show <http://dbpedia.org/ontology/channel> <http://dbpedia.org/resource/Fox_Broadcasting_Company>.
+}
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '163'}}]}}"
+48,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/mouthLocation> <http://dbpedia.org/resource/Arctic_Ocean>.?uri <http://dbpedia.org/property/mouthLocation> <http://dbpedia.org/resource/Laptev_Sea>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lena_River'}}]}}"
+49,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/president> <http://dbpedia.org/resource/Chung_Il_Kwon>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/War>. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+50,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/birthPlace>?birthPlace.?uri <http://dbpedia.org/property/deathPlace> <http://dbpedia.org/resource/Bryn_Mawr_Hospital>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ralph_Cooper_Hutchison'}}]}}"
+51,"
+SELECT?faith?affiliation WHERE {
+  <http://dbpedia.org/resource/Ajith_Perera> <http://dbpedia.org/property/faith>?faith.
+  <http://dbpedia.org/resource/Neungin_High_School> <http://dbpedia.org/property/religiousAffiliation>?affiliation.
+}
+","{'head': {'link': [], 'vars': ['faith', 'affiliation']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+52,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/role> <http://dbpedia.org/resource/Air_interdiction>.?uri <http://dbpedia.org/ontology/militaryUnit>?x . }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jefferson_J._DeBlanc'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/James_N._Cupp'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jerry_Coleman__Jerry_Coleman__1'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Joe_Foss'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/John_Glenn'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lee_T._Lasseter'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Henry_T._Elrod'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/John_F._Bolt'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kenneth_L._Reusser'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Christopher_Magee_(fighter_pilot)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Robert_M._Hanson'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Donald_Conroy'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Siegfried_Betke'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rolf_Thomsen'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Paul_Claas'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Viktor_von_Loßberg'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rudolf_Schmidt_(Major)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Scott_Speicher'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Kenneth_A._Walsh'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/James_E._Swett'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Manuel_Rivera,_Jr.'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Michael_J._Estocin'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Edward_Robert_Sellstrom'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Newton_Henry_Mason'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/William_Chesarek'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Matt_Santos____1'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Paul_G._Baker'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Harold_John_Ellison'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/William_W._Creamer'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/William_C._Lawe'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/George_H._Gay,_Jr.'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Henry_R._Kenyon,_Jr.'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/George_M._Campbell'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Oswald_J._Gaynier'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/John_P._Gray'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jack_W._Wilke'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Oliver_Mitchell'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dilbagh_Singh'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Art_Nalls'}}]}}"
+53,"
+SELECT DISTINCT?member WHERE { <http://dbpedia.org/resource/Insects_vs_Robots> <http://dbpedia.org/property/currentMembers>?member } 
+","{'head': {'link': [], 'vars': ['member']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'member': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Willie_Nelson'}}, {'member': {'type': 'literal', 'xml:lang': 'en', 'value': 'Jeff Smith'}}, {'member': {'type': 'literal', 'xml:lang': 'en', 'value': 'Tony Peluso'}}, {'member': {'type': 'literal', 'xml:lang': 'en', 'value': 'Milo Gonzalez'}}, {'member': {'type': 'literal', 'xml:lang': 'en', 'value': 'Nikita Sorokin'}}]}}"
+54,"
+ASK WHERE { <http://dbpedia.org/resource/Ombla> <http://dbpedia.org/property/country>  <http://dbpedia.org/resource/Croatia> }
+","{'head': {'link': []}, 'boolean': False}"
+55,"
+SELECT DISTINCT?person WHERE {
+ ?person <http://dbpedia.org/property/homeTown> <http://dbpedia.org/resource/Greater_Napanee>.
+ ?person <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Person>.
+}
+","{'head': {'link': [], 'vars': ['person']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'person': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Deryck_Whibley'}}]}}"
+56,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/child> <http://dbpedia.org/resource/William_A_Purtell>.?x <http://dbpedia.org/property/deathPlace>?uri. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+57,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Trn_Vit_Hng> <http://dbpedia.org/property/nationalteam>?uri }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+58,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/owner> <http://dbpedia.org/resource/Renaissance_Center>.?x <http://dbpedia.org/property/designer>?uri. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+59,"
+ SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Joshua_A._Siegel> <http://dbpedia.org/property/almaMater>?uri } 
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+60,"
+SELECT DISTINCT COUNT(?uri) WHERE {?uri <http://dbpedia.org/ontology/author> <http://dbpedia.org/resource/Novelas_ejemplares>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Book>}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+61,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/sourcePlace> <http://dbpedia.org/resource/Essex>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+62,"
+SELECT DISTINCT?division 
+WHERE { 
+   ?uri <http://dbpedia.org/property/locationCity> <http://dbpedia.org/resource/Taiwan>. 
+   ?uri <http://dbpedia.org/property/industry> <http://dbpedia.org/resource/Business>. 
+   ?uri <http://dbpedia.org/property/foundingDate>?date. 
+   ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Company>. 
+   ?uri <http://dbpedia.org/property/division>?division. 
+}
+","{'head': {'link': [], 'vars': ['division']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+63,"
+ASK WHERE { <http://dbpedia.org/resource/Sunrise_(HIMYM)> <http://dbpedia.org/property/guestStars> <http://dbpedia.org/resource/Tim_Gunn> }
+","{'head': {'link': []}, 'boolean': False}"
+64,"
+SELECT DISTINCT?university
+WHERE {
+ ?stanford <http://dbpedia.org/property/university>?university.
+ ?gerald <http://dbpedia.org/property/university>?university.
+ ?stanford <http://dbpedia.org/property/coach>?coach.
+ ?gerald <http://dbpedia.org/property/coach>?coach.
+ ?coach <http://dbpedia.org/property/name> ""Gerald Reaven"".
+ ?coach <http://dbpedia.org/property/name> ""Stanford Cardinal"".
+}
+","{'head': {'link': [], 'vars': ['university']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+65,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/David_W._Brown_House> <http://dbpedia.org/property/nearestCity>?uri } 
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Colorado'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Arapahoe_County,_Colorado'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Englewood,_Colorado'}}]}}"
+66,"
+ SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Deion_Sanders> <http://dbpedia.org/property/debut>?uri } 
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+67,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/nearestCity> <http://dbpedia.org/resource/Fountain_Lake_Farm>.?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+68,"
+SELECT DISTINCT?character WHERE {
+  <http://dbpedia.org/resource/Batman_Live> <http://dbpedia.org/property/characters>?character.
+}
+","{'head': {'link': [], 'vars': ['character']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Batman'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Joker_(comics)'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Poison_Ivy_(comics)'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Robin_(comics)'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Two-Face'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Harley_Quinn'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Penguin_(comics)'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Riddler'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Scarecrow_(DC_Comics)'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Catwoman'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Alfred_Pennyworth'}}, {'character': {'type': 'uri', 'value': 'http://dbpedia.org/resource/James_Gordon_(comics)'}}]}}"
+69,"
+SELECT DISTINCT?artist WHERE {
+ ?artist <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Artist>.
+ ?artist <http://dbpedia.org/property/training> <http://dbpedia.org/resource/San_Francisco_Art_Institute>.
+}
+","{'head': {'link': [], 'vars': ['artist']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peter_Forakis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Carlos_Vierra'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Robert_Graham_(sculptor)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Thom_Merrick'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/William_T._Wiley'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jim_Franklin_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Helen_Hyde'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Reminisce_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/James_Zar'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Robert_H._Hudson'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ernest_Peixotto'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ralph_Stackpole'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Tullio_DeSantis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ray_Strong'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lin_Evola'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Michael_Heizer'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/T._C._Cannon'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ronnie_Landfield'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jason_Rhoades'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Paul_McCarthy'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gregory_Gillespie'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Karl_Kasten'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Annie_Leibovitz'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gladys_Rockmore_Davis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Joan_Brown'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peter_Kovál'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Manuel_Neri'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Peter_Reginato'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ronald_Davis'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Sarah_Cain'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Daniela_Franco'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Emily_Carr'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jess_Collins'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Victor_Moscoso'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Arthur_Frank_Mathews'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Deborah_Remington'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Neil_Williams_(artist)'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lynn_Marie_Kirby'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Carlos_Villa'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Edith_Heath'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Adelaide_Hanscom_Leeson'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vena_Kava'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Doris_Lee'}}, {'artist': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Walter_Kuhlman'}}]}}"
+70,"
+ SELECT DISTINCT?owningOrg?builder WHERE { 
+   <http://dbpedia.org/resource/Ford_Kansas_City_Assembly_Plant> <http://dbpedia.org/ontology/owningOrganisation>?owningOrg.
+   <http://dbpedia.org/resource/Ford_Y-block_engine> <http://dbpedia.org/property/builder>?builder.
+ }
+","{'head': {'link': [], 'vars': ['owningOrg', 'builder']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+71,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/currency> <http://dbpedia.org/resource/Aureus> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Country>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/History_of_the_Roman_Empire'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Roman_Empire'}}]}}"
+72,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/awards> <http://dbpedia.org/resource/A._Peter_Dewey>. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+73,"
+SELECT DISTINCT COUNT(?uri) WHERE {?uri <http://dbpedia.org/property/network>?x.?x <http://dbpedia.org/property/sisterNames> <http://dbpedia.org/resource/Cartoonite>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/TelevisionShow>}
+","{'head': {'link': [], 'vars': ['callret-0']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'callret-0': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+74,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/developer> <http://dbpedia.org/resource/John_Fanning_(businessman)> .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Software>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Napster'}}]}}"
+75,"
+SELECT (COUNT(?uri) as?count) WHERE { <http://dbpedia.org/resource/Muhammad_Yunus> <http://dbpedia.org/ontology/award>?uri }
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '9'}}]}}"
+76,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/label> <http://dbpedia.org/resource/Motown>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Band>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mazarati'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Originals_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Monitors_(American_band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Apollo_(quintet)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Shades_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Elgins'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Boys_(American_band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Good_Girls'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Fantastic_Four_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Underdogs_(American_band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Commodores'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_5th_Dimension'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Andantes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Profyle'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Zhané'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Boogie_On_Reggae_Woman'}}, {'uri': {'type': 'uri', 'value': ""http://dbpedia.org/resource/You_Haven't_Done_Nothin'""}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Stoney_&_Meatloaf_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Switch_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bloodstone_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Four_Tops'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Martha_and_the_Vandellas'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Four_Seasons_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Isley_Brothers'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Supremes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wilson_Pickett'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/By_All_Means'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Gary_Byrd_and_the_GB_Experience'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Warp_9'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Wreckx-n-Effect'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/702_(group)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Marvelettes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/James_Davis_(musical_group)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Edwin_Starr'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/98_Degrees'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Scissor_Sisters'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rare_Earth_(band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ashford_&_Simpson'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mary_Jane_Girls'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Contours'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Emotions'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Velvelettes'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/B5_(group)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/General_Caine'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ozone_(American_band)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dazz_Band'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Pretty_Things'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Miracles'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Funk_Brothers'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Pointer_Sisters'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Today_(group)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/San_Remo_Golden_Strings'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rottin_Razkals'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/The_Mynah_Birds'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Bless_You_(Martha_and_the_Vandellas_song)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/High_Inergy'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/DeBarge_family'}}]}}"
+77,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/ontology/composer> <http://dbpedia.org/resource/Emil_Dean_Zoghby>.?x <http://dbpedia.org/ontology/author>?uri .?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Musical>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+78,"
+SELECT (COUNT(?uri) AS?count) WHERE {?uri <http://dbpedia.org/ontology/garrison> <http://dbpedia.org/resource/Arlington_County,_Virginia> }
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '8'}}]}}"
+79,"
+SELECT?religion WHERE { <http://dbpedia.org/resource/Kwai_Chang-Caine> <http://dbpedia.org/property/religion>?religion }
+","{'head': {'link': [], 'vars': ['religion']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+80,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/relatives> <http://dbpedia.org/resource/Kelly_Osbourne>.?uri <http://dbpedia.org/property/relatives> <http://dbpedia.org/resource/Ozzy_Osbourne>. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Jack_Osbourne'}}]}}"
+81,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Pullaiahgaripalli> <http://dbpedia.org/property/leaderTitle>?x.?x <http://dbpedia.org/property/houses>?uri .?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Legislature>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Lok_Sabha'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Rajya_Sabha'}}]}}"
+82,"
+SELECT DISTINCT?uri WHERE { 
+   ?uri <http://dbpedia.org/property/location> <http://dbpedia.org/resource/Daund_Junction_Railway_Station>.
+   ?uri <http://dbpedia.org/property/recorded> ""2009""^^<http://www.w3.org/2001/XMLSchema#gYear>.
+   ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Film>.
+}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+83,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/Riley_Reid> <http://dbpedia.org/property/ethnicity>?uri } 
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Chickasaw'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Puerto_Ricans_in_the_United_States'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Cherokee'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dominican_Americans_(Dominican_Republic)'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Irish_Americans'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/German_Americans'}}, {'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dutch_Americans'}}]}}"
+84,"
+SELECT DISTINCT?uri WHERE {?x <http://dbpedia.org/property/subsidiary> <http://dbpedia.org/resource/Viacom_Productions>.?uri <http://dbpedia.org/property/company>?x .?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/TelevisionShow>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+85,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/leader> <http://dbpedia.org/resource/Giuseppe_Bertello>.?uri <http://dbpedia.org/ontology/leader> <http://dbpedia.org/resource/Pietro_Parolin> }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vatican_City'}}]}}"
+86,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/campus> <http://dbpedia.org/resource/Mount_Moosilauke>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/University>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Dartmouth_College'}}]}}"
+87,"
+SELECT (COUNT(DISTINCT?uri) AS?count) WHERE {?x <http://dbpedia.org/property/architecturalStyle> <http://dbpedia.org/resource/Sanggar_Agung>.?x <http://dbpedia.org/ontology/religion>?uri. }
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '0'}}]}}"
+88,"
+SELECT (COUNT(?uri) AS?count) WHERE {?uri <http://dbpedia.org/property/programmingLanguage> <http://dbpedia.org/resource/C++>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Software>}
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '979'}}]}}"
+89,"
+ SELECT DISTINCT?garrison?line WHERE { 
+   <http://dbpedia.org/resource/Western_Naval_Command> <http://dbpedia.org/property/garrison>?garrison.
+   <http://dbpedia.org/resource/Vadodara_Junction_railway_station> <http://dbpedia.org/property/line>?line.
+ } 
+","{'head': {'link': [], 'vars': ['garrison', 'line']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maharashtra'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maharashtra'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Chhota_Udaipur'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maharashtra'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/New_Delhi'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maharashtra'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vadodara'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Maharashtra'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ahmedabad'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Chhota_Udaipur'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/New_Delhi'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vadodara'}}, {'garrison': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Mumbai'}, 'line': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Ahmedabad'}}]}}"
+90,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/shareholder>?x.?x <http://dbpedia.org/property/playsFor> <http://dbpedia.org/resource/Steve_Holland>. }
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+91,"
+SELECT DISTINCT?city WHERE { 
+   ?season <http://dbpedia.org/property/stadium>?stadium.
+   ?stadium <http://dbpedia.org/property/location>?city.
+   ?city <http://dbpedia.org/property/coordinates>?coord.
+    FILTER (CONTAINS(STR(?coord), ""Mediterranean""))
+}
+","{'head': {'link': [], 'vars': ['city']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+92,"
+ASK WHERE { <http://dbpedia.org/resource/Don%27t_Bring_Me_Down> <http://dbpedia.org/property/recorded>  <http://dbpedia.org/resource/West_Germany> }
+","{'head': {'link': []}, 'boolean': False}"
+93,"
+SELECT DISTINCT?city WHERE {?x <http://dbpedia.org/property/source> <http://dbpedia.org/resource/Montauk_State_Park>.?x <http://dbpedia.org/ontology/city>?city.?city <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}
+","{'head': {'link': [], 'vars': ['city']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+94,"
+SELECT (COUNT(DISTINCT?uri) as?count) WHERE { <http://dbpedia.org/resource/Boonchu_Rojanastien> <http://dbpedia.org/property/party>?x.?x <http://dbpedia.org/ontology/ideology>?uri . }
+","{'head': {'link': [], 'vars': ['count']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'count': {'type': 'typed-literal', 'datatype': 'http://www.w3.org/2001/XMLSchema#integer', 'value': '8'}}]}}"
+95,"
+SELECT DISTINCT?uri WHERE { <http://dbpedia.org/resource/PLUS_Helicopter_Services> <http://dbpedia.org/property/hubs>?uri } 
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+96,"
+SELECT DISTINCT?movie WHERE {
+ ?movie <http://dbpedia.org/ontology/musicComposer> <http://dbpedia.org/resource/Geoffrey_Burgon>.
+ ?movie <http://dbpedia.org/ontology/distributor> <http://dbpedia.org/resource/Cinema_International_Corporation>.
+ ?movie <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Film>.
+}
+","{'head': {'link': [], 'vars': ['movie']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'movie': {'type': 'uri', 'value': ""http://dbpedia.org/resource/Monty_Python's_Life_of_Brian""}}]}}"
+97,"
+ASK WHERE { <http://dbpedia.org/resource/Henry_David_Thoreau> <http://dbpedia.org/property/mainInterests> <http://dbpedia.org/resource/Politics> }
+","{'head': {'link': []}, 'boolean': True}"
+98,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/property/keyPeople> <http://dbpedia.org/resource/Dennis_Muilenburg>.?uri <http://dbpedia.org/ontology/product> <http://dbpedia.org/resource/Chinook>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Company>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': []}}"
+99,"
+SELECT DISTINCT?uri WHERE {?uri <http://dbpedia.org/ontology/leader> <http://dbpedia.org/resource/Giuseppe_Bertello>.?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/Country>}
+","{'head': {'link': [], 'vars': ['uri']}, 'results': {'distinct': False, 'ordered': True, 'bindings': [{'uri': {'type': 'uri', 'value': 'http://dbpedia.org/resource/Vatican_City'}}]}}"
