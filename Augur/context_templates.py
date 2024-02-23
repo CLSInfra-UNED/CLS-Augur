@@ -36,7 +36,7 @@ Step 3: Generate SPARQL Code
 - Construct the SPARQL query using the intermediate representation.
 - Include necessary prefixes like 'PREFIX dbo: http://dbpedia.org/ontology/' and 'PREFIX dbr: http://dbpedia.org/resource/'.
 - Formulate the 'SELECT' statement to count the number of films: 'SELECT DISTINCT COUNT(?film)', with COUNT clause based on the user's request and the intermediate form.
-- Construct the 'WHERE' clause to specify the films directed by Stanley Kubrick: 'WHERE {?film dbo:director dbr:Stanley_Kubrick . }'. If it's a name, use regex for names so they can be separated by underscore or spaces.
+- Construct the 'WHERE' clause to specify the films directed by Stanley Kubrick: 'WHERE {?film dbo:director dbr:Stanley_Kubrick . }'.
 
 ```sparql
 PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -64,7 +64,13 @@ WHERE {
     def generate_prompt(self, user_query, few_s = False, chain_t = False, rag = False):
         prompt = []
 
-        if rag: prompt.append(self.SCHEMA.format(schema = self.schema_rag.process_query(user_query), k = 5))
+        # if rag: 
+        #     prompt.append(
+        #         self.SCHEMA.format(
+        #             schema = self.schema_rag.process_query(user_query), 
+        #             k = 5
+        #             )
+        #         )
        
         if few_s:
             fs_rag_output = self.sparql_rag.process_query(user_query)
@@ -80,6 +86,15 @@ WHERE {
             few_shot_concat = '\n'.join(few_shot_concat)
             prompt.append(self.FEW_SHOT + few_shot_concat)
         
+        #test moving rag here
+        if rag: 
+            prompt.append(
+                self.SCHEMA.format(
+                    schema = self.schema_rag.process_query(user_query), 
+                    k = 5
+                    )
+                )
+
         if chain_t: prompt.append(self.COT)
 
         prompt.append(f"# Write the SparQL code that retrieves the answer to ONLY this request: {user_query}.\n\n")

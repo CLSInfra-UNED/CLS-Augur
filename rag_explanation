@@ -1,0 +1,45 @@
+<owl:Class rdf:about="http://dbpedia.org/ontology/Territory">
+<rdfs:label xml:lang="de">Territorium</rdfs:label>
+<rdfs:label xml:lang="en">territory</rdfs:label>
+<rdfs:label xml:lang="el">περιοχή</rdfs:label>
+<rdfs:label xml:lang="ja">国土</rdfs:label>
+<rdfs:label xml:lang="nl">territorium</rdfs:label>
+<rdfs:label xml:lang="fr">territoire</rdfs:label>
+<rdfs:comment xml:lang="en">A territory may refer to a country subdivision, a non-sovereign
+    geographic region.</rdfs:comment>
+<rdfs:subClassOf rdf:resource="http://dbpedia.org/ontology/PopulatedPlace" />
+<prov:wasDerivedFrom rdf:resource="http://mappings.dbpedia.org/index.php/OntologyClass:Territory" />
+
+
+
+v_1 = embedding(A territory may refer to a country subdivision, a non-sovereign
+geographic region.)
+
+metadata = "http://dbpedia.org/ontology/Territory" rdf:comment A territory may refer to a country subdivision, a non-sovereign
+geographic region.
+
+pregunta = "Dime los países que colinden con estados unidos"
+
+paso 1: semantic_search(pregunta)
+    paso 1.1: v_2 = embedding(pregunta)
+    paso 1.2: cosine_similarity(v_2) resultado = v_1
+    paso 1.3: subj, pred, obj = resultado.metadata
+
+paso 2: Recorrido KG:
+    paso 2.1: search(subj) <-- this searches the ontology for the triplets whose subject is the same as the subject with the comment that its been captured in the semantic search
+    paso 2.2: Once the triplets have been captured, given this:
+        "http://dbpedia.org/ontology/Territory" a rdf:Class
+        "http://dbpedia.org/ontology/Territory" rdfs:comment A territory may refer to a country subdivision, a non-sovereign
+        geographic region
+        "http://dbpedia.org/ontology/Territory" rdfs:subClassOf http://dbpedia.org/ontology/PopulatedPlace
+        "http://dbpedia.org/ontology/Territory" rdfs:wasDerivedFrom http://mappings.dbpedia.org/index.php/OntologyClass:Territory
+        Now we take the objects of this triplets, and look for triplets where the subject is any of the objects found on this new structure
+        
+
+
+Mejoras:
+    - Mejorar extracción Schema KG:
+        - POS based search (Agent)
+    - Chain of thought
+    - Consult based FS rag
+    

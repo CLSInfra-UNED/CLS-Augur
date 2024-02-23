@@ -1,32 +1,33 @@
 import re
 import gc
-import os 
+import os
 
 import pandas as pd
 import Augur.context_templates as ctx
 
-from tqdm import tqdm
+from dotenv import load_dotenv
 from torch.cuda import empty_cache
+from openai import OpenAI
 
 from Augur import (model, rag)
 
+load_dotenv()
 
-MODEL_ID = 'codellama/CodeLlama-13b-Instruct-hf'
-#MODEL_ID = "deepseek-ai/deepseek-coder-6.7b-instruct"
+OPENAI_API_KEY =  os.getenv("OPENAI_API_KEY")
 EMB_MODEL_ID = "sentence-transformers/all-mpnet-base-v2"
 MAX_NEW_TOKENS = 2048
-TEMP = 1e-10
+TEMP = 0
 
-def capture_code(text): 
+
+def capture_code(text):
     code_pattern = r"```(?:sparql)?(.*?)```"
     code = re.findall(code_pattern, text, re.DOTALL)
     return code[0] if code else "None"
 
-              
+
 def main():
     # Load datasets
     df_test = pd.read_json("datafiles/test-data.json")
-    df_test = df_test.sample(n=1000, random_state=42)
     df_train = pd.read_json("datafiles/train-data.json")
 
     ontology_files = [
@@ -35,55 +36,52 @@ def main():
 
     # Instantiate rag db objects
     ontology_db = rag.GraphRag(EMB_MODEL_ID, ontology_files)
-    queries_db = rag.SparQLRag(EMB_MODEL_ID, 
-                               df_train["corrected_question"].to_list(), 
+    queries_db = rag.SparQLRag(EMB_MODEL_ID,
+                               df_train["corrected_question"].to_list(),
                                df_train["sparql_query"].to_list())
 
     # Instantiate conversational tools and prompt manager
-    query_pipeline = model.conversational_pipeline(MODEL_ID, MAX_NEW_TOKENS)
 
     chat_code_agent = ctx.PromptLlamaCode(ontology_db, queries_db)
-    
-    model_name = MODEL_ID.split('/')[-1]
-    os.makedirs(model_name, exist_ok=True)
 
-    # Perform inference with all method combinations
+    model_name = "gpt-3.5-turbo"
+    os.makedirs(model_name, exist_ok=True)
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    
+    #Perform inference with all method combinations
     all_combined = []
     combinations = [(bool(i & 4), bool(i & 2), bool(i & 1)) for i in range(8)]
-    for cot, few_s, rag_s in tqdm(combinations, desc=f"Test:"):
+    for cot, few_s, rag_s in combinations:
         ordered_list = []
-        #recover from last checkpoint
-        if not cot and not few_s and not rag_s: continue
-        for query in tqdm(df_test["corrected_question"], desc=f"Query:"):
-            conversation = model.conversation_init(chat_code_agent, 
-                                                   query, 
-                                                   few_shot=few_s,
-                                                   cot=cot,
-                                                   rag=rag_s)
+        for query in df_test["corrected_question"][:100]:
             
-            result  = query_pipeline(conversation,
-                                    do_sample=True,
-                                    top_k=1,
-                                    temperature=TEMP,
-                                    max_new_tokens=MAX_NEW_TOKENS,
-                                    num_return_sequences=1)
-            
+            conversation = model.conversation_init_dict(chat_code_agent,
+                                                   query,
+                                                   few_shot = few_s,
+                                                   cot = cot,
+                                                   rag = rag_s)
+
+            result = client.chat.completions.create(
+                model = model_name,
+                messages = conversation,
+                temperature = 0,
+                )
+            result = result.choices[0].message.content
+
             result = {
                 'model'  : model_name,
                 'method' : f"{few_s * 'FS'}{cot * 'CoT'}{rag_s * 'ont_rag'}",
-                'consult' : capture_code(result[2]['content']),
-                'prompt' : result[1]['content'],
-                'query' : query
+                'consult' : capture_code(result),
                 }
-            
+
             ordered_list.append(result)
             all_combined.append(result)
-            
+
             # Clear memory cache
             del conversation
             gc.collect()
             empty_cache()
-        
+
         # Save to disk partial result
         pd.DataFrame(ordered_list).to_csv((
             f"{model_name}/"
@@ -104,7 +102,7 @@ def main():
     #                                         few_shot = True,
     #                                         cot = False,
     #                                         rag = True)
-        
+
     #     result =query_pipeline(conversation,
     #                 do_sample = True,
     #                 top_k = 1,
@@ -113,7 +111,7 @@ def main():
     #                 # num_return_sequences = 1,
     #                 #num_beams=1)
     #                 #penalty_alpha= 0)
-        
+
     #     conversation_list.append({'consult' : capture_code(result[2]['content'])})
 
     #     del result
@@ -122,10 +120,7 @@ def main():
     #     empty_cache()
 
     # pd.DataFrame(conversation_list).to_csv('deepseek_results_fs8_CR_response.csv')
-    
+
 
 if __name__ == '__main__':
     main()
-
-
-

@@ -2,11 +2,12 @@ import os
 import stardog
 
 from dotenv import load_dotenv
-
+from openai import OpenAI
 load_dotenv()
 
 SD_USER = os.getenv('SD_USER')
 SD_PASSWORD = os.getenv('SD_PASSWORD')
+
 
 def send_stardog_consult(query):
     conn_details = {

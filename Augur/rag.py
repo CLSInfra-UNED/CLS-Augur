@@ -3,8 +3,8 @@ import datetime
 from abc import ABC, abstractmethod
 
 from functools import lru_cache
-from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores.chroma import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from rdflib import Graph
 from rdflib.namespace import RDFS
 
@@ -79,7 +79,7 @@ class GraphRag(RagBase):
     
 
     def raw_rag_output(self, text, k = 10):
-        return self.rag.similarity_search(text, include_metadata=True, k = k)
+        return self.rag.similarity_search(text, k = k)
 
 
     def _get_connected_nodes_and_prefixes(self, node):
@@ -153,15 +153,15 @@ class SparQLRag(RagBase):
         return db
     
     
-    def process_query(self, text, k = 3):
+    def process_query(self, text, k = 8):
         output = self.raw_rag_output(text, k)
         output = [{'question' : document.page_content , 'metadata' : document.metadata} 
                   for document in output]
         return output
 
     
-    def raw_rag_output(self, text, k = 3):
-        return self.rag.similarity_search(text, include_metadata = True, k = k)
+    def raw_rag_output(self, text, k = 8):
+        return self.rag.similarity_search(text, k = k)
 
 
 if __name__ == "__main__":

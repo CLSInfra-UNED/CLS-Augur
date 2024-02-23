@@ -3,6 +3,8 @@ Parts of this code use resources from Meta and as such is governed by the orgini
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # This software may be used and distributed according to the terms of the Llama 2 Community License Agreement.
 """
+import os
+
 import torch
 
 from functools import lru_cache
@@ -18,10 +20,10 @@ from transformers import (AutoConfig,
                           Conversation, 
                           pipeline)
 
+from openai import OpenAI
 
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
 
 def get_llama_prompt(message: str, chat_history: list[tuple[str, str]],
                system_prompt: str) -> str:
@@ -174,3 +176,24 @@ def conversation_init(prompt, user_query, few_shot = False, cot = False, rag = F
     conversation.add_message({'role':'user', 'content': prompt.generate_prompt(user_query, few_shot, cot, rag)})
 
     return conversation
+
+def conversation_init_dict(prompt, user_query, few_shot = False, cot = False, rag = False):
+    messages=[
+        {"role": "system", "content": prompt.SYSTEM},
+        {"role": "user", "content": prompt.generate_prompt(user_query, few_shot, cot, rag) },
+    ]
+    return messages
+
+def conversational_pipeline_st(model_id, max_new_tokens = 500):
+    model, tokenizer = load_quant_model(model_id)
+
+    streamer = TextStreamer(tokenizer)
+    pipe = pipeline("conversational",
+                    model=model,
+                    tokenizer=tokenizer,
+                    torch_dtype=torch.float16,
+                    max_new_tokens=max_new_tokens,
+                    device_map="auto",
+                    streamer=streamer)
+    
+    return streamer, pipe
