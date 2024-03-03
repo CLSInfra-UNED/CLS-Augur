@@ -18,7 +18,8 @@ from transformers import (AutoConfig,
                           BitsAndBytesConfig, 
                           TextStreamer,
                           Conversation, 
-                          pipeline)
+                          pipeline,
+                          LlamaForCausalLM)
 
 from openai import OpenAI
 
@@ -51,10 +52,13 @@ def run(message: str,
     prompt = get_llama_prompt(message, chat_history, system_prompt)
     inputs = tokenizer([prompt], return_tensors='pt', add_special_tokens=False).to('cuda:0')
 
-    streamer = TextIteratorStreamer(tokenizer,
-                                    timeout=10.,
-                                    skip_prompt=True,
-                                    skip_special_tokens=True)
+    streamer = TextIteratorStreamer(
+        tokenizer,
+        timeout=10.,
+        skip_prompt=True,
+        skip_special_tokens=True    
+    )
+    
     generate_kwargs = dict(
         inputs,
         streamer=streamer,
@@ -65,6 +69,7 @@ def run(message: str,
         temperature=temperature,
         num_beams=1,
     )
+    
     print(model.device)
     t = Thread(target=model.generate, kwargs=generate_kwargs)
     t.start()
@@ -157,16 +162,18 @@ def load_quant_model(model_id):
     return model, tokenizer
 
 
-def conversational_pipeline(model_id, max_new_tokens = 500):
+def conversational_pipeline(model_id, max_new_tokens=500):
     model, tokenizer = load_quant_model(model_id)
-    
-    return pipeline("conversational",
-                    model=model,
-                    tokenizer=tokenizer,
-                    torch_dtype=torch.float16,
-                    max_new_tokens=max_new_tokens,
-                    device_map="auto",
-                    streamer=TextStreamer(tokenizer))
+
+    return pipeline(
+        "conversational",
+        model=model,
+        tokenizer=tokenizer,
+        torch_dtype=torch.float16,
+        max_new_tokens=max_new_tokens,
+        device_map="auto",
+        streamer=TextStreamer(tokenizer)
+    )
 
     
 def conversation_init(prompt, user_query, few_shot = False, cot = False, rag = False):

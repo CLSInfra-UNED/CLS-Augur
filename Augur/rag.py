@@ -180,7 +180,7 @@ if __name__ == "__main__":
     fewshot_db = SparQLRag(model, 
                            df_train['corrected_question'].to_list(), 
                            df_train['sparql_query'].to_list())
-    print(ontology_db.process_query('give me all the authors that were born in the second century', 5))
-    print(fewshot_db.process_query('give me all the authors that were born in the second century', 5))
+    print(ontology_db.process_query('Give me the characters who last appeared in Star Wars Episode 3', 5))
+    print(fewshot_db.process_query('Give me the characters who last appeared in Star Wars Episode 3', 5))
     print('done')
     
