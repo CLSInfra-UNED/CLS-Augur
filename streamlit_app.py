@@ -37,14 +37,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-
-
-# def check_input_token_length(message: str, chat_history: list[tuple[str, str]], system_prompt: str) -> None:
-#     input_token_length = get_input_token_length(message, chat_history, system_prompt)
-#     if input_token_length > MAX_INPUT_TOKEN_LENGTH:
-#         raise Exception(f'The accumulated input is too long ({input_token_length} > {MAX_INPUT_TOKEN_LENGTH}). Clear your chat history and try again.')
-    
-
 # def send_consult(query):
 #     conn_details = {
 #     'endpoint': 'https://sd-0d6bd678.stardog.cloud:5820',
@@ -65,8 +57,8 @@ st.markdown("""
 @st.cache_resource()
 def load_conversation_model():
     df_train = pd.read_json("datafiles/train-data.json")
-    ontology_db = rag.GraphRag(EMB_MODEL_ID, ["./datafiles/dbpedia_2016-10.owl"])
-    queries_db = rag.SparQLRag(EMB_MODEL_ID, 
+    ontology_db = rag.GraphRAG(EMB_MODEL_ID, ["./datafiles/dbpedia_2016-10.owl"])
+    queries_db = rag.SparQLRAG(EMB_MODEL_ID, 
                                df_train["corrected_question"].to_list(), 
                                df_train["sparql_query"].to_list())
     

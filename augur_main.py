@@ -34,10 +34,12 @@ def main():
     ]
 
     # Instantiate rag db objects
-    ontology_db = rag.GraphRag(EMB_MODEL_ID, ontology_files)
-    queries_db = rag.SparQLRag(EMB_MODEL_ID, 
-                               df_train["corrected_question"].to_list(), 
-                               df_train["sparql_query"].to_list())
+    ontology_db = rag.GraphRAG(EMB_MODEL_ID, ontology_files)
+    queries_db = rag.SparQLRAG(
+        EMB_MODEL_ID, 
+        df_train["corrected_question"].to_list(), 
+        df_train["sparql_query"].to_list()
+    )
 
     # Instantiate conversational tools and prompt manager
     query_pipeline = model.conversational_pipeline(MODEL_ID, MAX_NEW_TOKENS)
@@ -52,29 +54,31 @@ def main():
     combinations = [(bool(i & 4), bool(i & 2), bool(i & 1)) for i in range(8)]
     for cot, few_s, rag_s in tqdm(combinations, desc=f"Test:"):
         ordered_list = []
-        #recover from last checkpoint
-        if not cot and not few_s and not rag_s: continue
         for query in tqdm(df_test["corrected_question"], desc=f"Query:"):
-            conversation = model.conversation_init(chat_code_agent, 
-                                                   query, 
-                                                   few_shot=few_s,
-                                                   cot=cot,
-                                                   rag=rag_s)
-            
-            result  = query_pipeline(conversation,
-                                    do_sample=True,
-                                    top_k=1,
-                                    temperature=TEMP,
-                                    max_new_tokens=MAX_NEW_TOKENS,
-                                    num_return_sequences=1)
-            
+            conversation = model.conversation_init(
+                chat_code_agent,
+                query,
+                few_shot=few_s,
+                cot=cot,
+                rag=rag_s
+            )
+
+            result = query_pipeline(
+                conversation,
+                do_sample=True,
+                top_k=1,
+                temperature=TEMP,
+                max_new_tokens=MAX_NEW_TOKENS,
+                num_return_sequences=1
+            )
+
             result = {
-                'model'  : model_name,
-                'method' : f"{few_s * 'FS'}{cot * 'CoT'}{rag_s * 'ont_rag'}",
-                'consult' : capture_code(result[2]['content']),
-                'prompt' : result[1]['content'],
-                'query' : query
-                }
+                'model': model_name,
+                'method': f"{few_s * 'FS'}{cot * 'CoT'}{rag_s * 'ont_rag'}",
+                'consult': capture_code(result[2]['content']),
+                'prompt': result[1]['content'],
+                'query': query
+            }
             
             ordered_list.append(result)
             all_combined.append(result)
@@ -91,38 +95,11 @@ def main():
             f"{cot * 'CoT_'}"
             f"{rag_s * 'ont_rag_'}"
             f"{model_name}.csv"
-            )
-        )
+        ))
 
     # Save to disk combined results
     pd.DataFrame(all_combined).to_csv(f"{model_name}/{model_name}_combined.csv")
 
-    # conversation_list = []
-    # for query in df_test['corrected_question'][:100]:
-    #     conversation = model.conversation_init(chat_code_agent,
-    #                                         query,
-    #                                         few_shot = True,
-    #                                         cot = False,
-    #                                         rag = True)
-        
-    #     result =query_pipeline(conversation,
-    #                 do_sample = True,
-    #                 top_k = 1,
-    #                 temperature = TEMP,
-    #                 max_new_tokens = MAX_NEW_TOKENS,)
-    #                 # num_return_sequences = 1,
-    #                 #num_beams=1)
-    #                 #penalty_alpha= 0)
-        
-    #     conversation_list.append({'consult' : capture_code(result[2]['content'])})
-
-    #     del result
-    #     del conversation
-    #     gc.collect()
-    #     empty_cache()
-
-    # pd.DataFrame(conversation_list).to_csv('deepseek_results_fs8_CR_response.csv')
-    
 
 if __name__ == '__main__':
     main()

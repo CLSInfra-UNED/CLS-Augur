@@ -19,12 +19,22 @@ from transformers import (AutoConfig,
                           TextStreamer,
                           Conversation, 
                           pipeline,
-                          LlamaForCausalLM)
-
-from openai import OpenAI
+                          LlamaForCausalLM,
+                          GenerationMixin)
 
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+class CustomGenerationMixin(GenerationMixin):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    def generate(self, *args, **kwargs):
+        return super().generate(*args, **kwargs)
+
+class AugurLlamaModel(LlamaForCausalLM, CustomGenerationMixin):
+    def __init__(self, config, *args, **kwargs):
+        super().__init__(config, *args, **kwargs)
+
 
 def get_llama_prompt(message: str, chat_history: list[tuple[str, str]],
                system_prompt: str) -> str:
