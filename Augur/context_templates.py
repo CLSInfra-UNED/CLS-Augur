@@ -13,7 +13,7 @@ class PromptLlamaCode(PromptTemplate):
     SYSTEM = ("You are a helpful, respectful and honest assistant expert coding"
               " in SparQL, ontologies and semantic web. Always DO answer the code in SparQL that retrieves the "
               "information asked. DO enclose the code in a code block:\n```\ncode\n```\n).\n"
-            )
+              )
     
     SCHEMA = '## Given the following turtle schema of an ontology:\n{schema}\n\n'
     

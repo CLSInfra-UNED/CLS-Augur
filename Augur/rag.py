@@ -86,8 +86,8 @@ class GraphRAG(RAGBase):
             if str(subj) in node:
                 connected_nodes.add(subj)
                 connected_nodes.add(obj)
-            if str(obj) in node:
-                connected_nodes.add(subj)
+            # if str(obj) in node:
+            #     connected_nodes.add(subj)
         connected_graph = Graph()
         for subj, pred, obj in self.graph:
             if subj in connected_nodes:
@@ -101,10 +101,24 @@ class GraphRAG(RAGBase):
 
         return connected_graph
     
+    
+    # @process_query.register(str)
+    # def _(self, text:str, tagging=False, get_connected=True, k=10):
+    #     output = self.raw_rag_output(text, k)
+    #     nodes = {document.metadata['subj'] for document in output}
+    #     output = self._get_connected_nodes_and_prefixes(nodes)
+    #     output = output.serialize(format='turtle')
+    #     # Add dbr prefix, as the OWL file does not contain the resource triples
+    #     output = "@prefix dbr: <http://dbpedia.org/resource/> .\n" + output
+    #     return output
+    
 
-    def process_query(self, text, k=10):
-        output = self.raw_rag_output(text, k)
-        nodes = {document.metadata['subj'] for document in output}
+    def process_query(self, text, tagging=False, get_connected=True, k=10):
+        if isinstance(text, str): text = [text]
+
+        output = [self.raw_rag_output(definition) for definition in text]
+        nodes = [{document.metadata['subj'] for document in retrieved_output} for retrieved_output in output]
+        nodes = set.union(*nodes)
         output = self._get_connected_nodes_and_prefixes(nodes)
         output = output.serialize(format='turtle')
         # Add dbr prefix, as the OWL file does not contain the resource triples
@@ -183,7 +197,7 @@ if __name__ == "__main__":
                            df_train['corrected_question'].to_list(),
                            df_train['sparql_query'].to_list())
 
-    query = "This property describes the relationship between a musical work and the populated place where it was recorded. It has domain 'MusicalWork' and range 'PopulatedPlace'. The property is labeled in multiple languages including English, Dutch, Greek, and French. It is a subproperty of 'coparticipatesWith' from the DUL ontology."
+    query = "founder"
     print(ontology_db.process_query(query, 5))
     print(fewshot_db.process_query(query, 5))
     print('done')
