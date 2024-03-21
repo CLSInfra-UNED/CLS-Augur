@@ -186,18 +186,18 @@ def conversational_pipeline(model_id, max_new_tokens=500):
     )
 
     
-def conversation_init(prompt, user_query, few_shot = False, cot = False, rag = False):
+def conversation_init(prompt, user_query, few_shot = False, cot = False, rag = False, cheating=False):
     conversation = Conversation()
-        
+    #TODO delete cheating
     conversation.add_message({'role':'system', 'content': prompt.SYSTEM})
-    conversation.add_message({'role':'user', 'content': prompt.generate_prompt(user_query, few_shot, cot, rag)})
+    conversation.add_message({'role':'user', 'content': prompt.generate_prompt(user_query, few_shot, cot, rag, cheating=cheating)})
 
     return conversation
 
-def conversation_init_dict(prompt, user_query, few_shot = False, cot = False, rag = False):
+def conversation_init_dict(prompt, user_query, few_shot = False, cot = False, rag = False, cheating=False):
     messages=[
         {"role": "system", "content": prompt.SYSTEM},
-        {"role": "user", "content": prompt.generate_prompt(user_query, few_shot, cot, rag) },
+        {"role": "user", "content": prompt.generate_prompt(user_query, few_shot, cot, rag, cheating=cheating) },
     ]
     return messages
 

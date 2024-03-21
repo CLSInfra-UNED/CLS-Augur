@@ -15,7 +15,7 @@ class PromptLlamaCode(PromptTemplate):
               "information asked. DO enclose the code in a code block:\n```\ncode\n```\n).\n"
               )
     
-    SCHEMA = '## Given the following turtle schema of an ontology:\n{schema}\n\n'
+    SCHEMA = '###Sample Identifiers from Database Schema.\n # These identifiers are examples of what you might encounter in the database and are provided to assist in query construction. They represent a subset of the possible entities and relationships in the full schema:\n{schema}\n\n'
     
     COT = """
 ### Some example user requests and corresponding SparQL queries are provided based on similar problems to help you answer the last request:
@@ -56,64 +56,123 @@ WHERE {
     )
     FEW_SHOT_TEMPLATE = "# Write the SparQL code that retrieves the answer to this request: {question}\n\n{consult}\n<|EOT|>\n\n"
 
-    
-    def __init__(self, schema_rag, sparql_rag):
+    FIXED_FS = """
+### Some example user requests and corresponding SparQL queries are provided based on similar problems:
+# Write the SparQL code that retrieves the answer to this request: How many movies did Stanley Kubrick direct?\n
+```sparql
+SELECT DISTINCT COUNT(?uri) WHERE {?uri <http://dbpedia.org/ontology/director> <http://dbpedia.org/resource/Stanley_Kubrick>  . }
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: Which city's foundeer is John Forbes?
+```sparql
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/founder> <http://dbpedia.org/resource/John_Forbes_(British_Army_officer)>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/City>}
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: What is the river whose mouth is in deadsea?
+```sparql
+SELECT DISTINCT ?uri WHERE {?uri <http://dbpedia.org/ontology/riverMouth> <http://dbpedia.org/resource/Dead_Sea>  . ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River>}
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: What is the allegiance of John Kotelawala ?
+```sparql
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/John_Kotelawala> <http://dbpedia.org/property/allegiance> ?uri }
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: How many races have the horses bred by Jacques Van't Hart participated in?
+```sparql
+SELECT DISTINCT COUNT(?uri) WHERE { ?x <http://dbpedia.org/ontology/breeder> <http://dbpedia.org/resource/Jacques_Van't_Hart> . ?x <http://dbpedia.org/property/race> ?uri  . }
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: What is the incumbent of the Al Gore presidential campaign, 2000 and also the president of the Ann Lewis ?
+```sparql
+SELECT DISTINCT ?uri WHERE { <http://dbpedia.org/resource/Al_Gore_presidential_campaign,_2000> <http://dbpedia.org/ontology/incumbent> ?uri. <http://dbpedia.org/resource/Ann_Lewis> <http://dbpedia.org/ontology/president> ?uri} 
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: Was Ganymede discovered by Galileo Galilei?
+```sparql
+ASK WHERE { <http://dbpedia.org/resource/Ganymede_(moon)> <http://dbpedia.org/property/discoverer> <http://dbpedia.org/resource/Galileo_Galilei> }
+```
+<|EOT|>
+
+# Write the SparQL code that retrieves the answer to this request: Does the Toyota Verossa have the front engine design platform?
+```sparql
+ASK WHERE { <http://dbpedia.org/resource/Toyota_Verossa> <http://dbpedia.org/ontology/automobilePlatform> <http://dbpedia.org/resource/Front-engine_design>  . }
+```
+<|EOT|> 
+"""
+
+
+    def __init__(self, schema_rag, sparql_rag, agent=None):
        self.schema_rag = schema_rag
        self.sparql_rag = sparql_rag
+       self.agent = agent
 
-    def generate_prompt(self, user_query, few_s = False, chain_t = False, rag = False):
+    
+    def generate_prompt(
+            self,
+            user_query,
+            few_s=False,
+            chain_t=False,
+            rag=False,
+            cheating=False
+    ):
         prompt = []
 
-        # if rag: 
-        #     prompt.append(
-        #         self.SCHEMA.format(
-        #             schema = self.schema_rag.process_query(user_query), 
-        #             k = 5
-        #             )
-        #         )
-       
+        if rag: 
+            prompt.append(
+                self.SCHEMA.format(
+                    schema=self.schema_rag.process_query(user_query),
+                    max_k=10
+                )
+            )
+        elif self.agent:
+            prompt.append(
+                self.SCHEMA.format(
+                    schema=self.schema_rag.process_query(self.agent(user_query), max_k=5),
+                )
+            )
+        elif cheating:
+            prompt.append(
+                self.SCHEMA.format(
+                    schema=cheating,
+                )
+            )
+        
         if few_s:
             fs_rag_output = self.sparql_rag.process_query(user_query)
             
             few_shot_concat = [
-                self.FEW_SHOT_TEMPLATE.format(
-                    question = document['question'],
-                    consult = "```sparql\n" + document['metadata']['consult'] + "\n```"
+                (
+                    # self.SCHEMA.format(
+                    #     schema=self.schema_rag.process_query(
+                    #         self.agent(document['question']), max_k=1) if self.agent else 
+                    #         document['question'],
+                    # ) +
+                    self.FEW_SHOT_TEMPLATE.format(
+                        question=document['question'],
+                        consult="```sparql\n" +
+                        document['metadata']['consult'] + "\n```"
                     )
-                    for document in fs_rag_output
-                ]
+                )
+                for document in fs_rag_output
+            ]
+                
             
             few_shot_concat = '\n'.join(few_shot_concat)
             prompt.append(self.FEW_SHOT + few_shot_concat)
-        
-        #test moving rag here
-        if rag: 
-            prompt.append(
-                self.SCHEMA.format(
-                    schema = self.schema_rag.process_query(user_query), 
-                    k = 5
-                    )
-                )
 
+            # prompt.append(self.FIXED_FS)
         if chain_t: prompt.append(self.COT)
 
-        prompt.append(f"# Write the SparQL code that retrieves the answer to ONLY this request: {user_query}.\n\n")
+        prompt.append(f"# TASK:\n# Write the SparQL code that retrieves the answer to this request: {user_query}.\n\n")
 
         if chain_t: prompt.append(self.COT_END)
 
         return '\n'.join(prompt)
     
-
-
-
-
-
-COT_EXAMPLE = """
-Natural Language Query: "Find articles written by John Doe about Artificial Intelligence."
-Chain of Thought Reasoning:
-1. Identify the author: John Doe.
-2. Identify the subject: Artificial Intelligence.
-3. Search for articles matching these criteria.
-SPARQL Query: 
-"SELECT ?article WHERE { ?article wdt:P50 wd:JohnDoe . ?article wdt:P921 wd:ArtificialIntelligence . }"
-"""

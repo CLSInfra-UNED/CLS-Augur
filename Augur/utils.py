@@ -64,14 +64,10 @@ def get_max_indexes(lst):
     return [i for i, val in enumerate(lst) if val == max_val]
 
 
-def self_consistency(queries_list, ontology_path):
-    ontology = Graph().parse(ontology_path)
-    ontology = {str(element) for triple in ontology for element in triple if
-                'http://dbpedia.org/' in element}
+def self_consistency(queries_list, ontology):
 
-    captured_code = [capture_code(query) for query in queries_list]
     parsed_code = [replace_prefixed_names_with_uris(query) for query in
-                   captured_code]
+                   queries_list]
     extracted_identifiers = [extract_identifiers(code) for code in parsed_code]
 
     agreement = count_common_elements(extracted_identifiers)
@@ -81,5 +77,25 @@ def self_consistency(queries_list, ontology_path):
         consistency = [len(query_uri & ontology) for query_uri in candidates]
         max_index = get_max_indexes(consistency)
         if max_index != 1:
-            return captured_code[random.choice(max_index)]
-    return captured_code[max_index[-1]]
+            return queries_list[random.choice(max_index)]
+    return queries_list[max_index[-1]]
+
+def self_consistency(queries_list, ontology):
+
+    parsed_code = [replace_prefixed_names_with_uris(query) for query in
+                   queries_list]
+    extracted_identifiers = [extract_identifiers(code) for code in parsed_code]
+
+    agreement = count_common_elements(extracted_identifiers)
+    print(agreement)
+    max_index = get_max_indexes(agreement)
+    print(max_index)
+    if max_index != 1:
+        candidates = [extracted_identifiers[idx] for idx in max_index]
+        consistency = [len(query_uri & ontology) for query_uri in candidates]
+        _max_index = get_max_indexes(consistency)
+        print(_max_index)
+        if _max_index != 1:
+            print([max_index[idx] for idx in _max_index])
+            return queries_list[max_index[random.choice(_max_index)]]
+    return queries_list[max_index[-1]]
