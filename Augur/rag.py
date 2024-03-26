@@ -102,23 +102,6 @@ class GraphRAG(RAGBase):
 
         return connected_graph
     
-    # def _get_connected_nodes_and_prefixes(self, ids):
-    #     nodes = Graph()
-    #     for s,p,o in self.graph:
-    #         if str(s) in ids and 'comment' in p and (o.language == 'en' or not o.language):
-    #             nodes.add((s,p,o))
-    #     return nodes
-    
-    # @process_query.register(str)
-    # def _(self, text:str, tagging=False, get_connected=True, k=10):
-    #     output = self.raw_rag_output(text, k)
-    #     nodes = {document.metadata['subj'] for document in output}
-    #     output = self._get_connected_nodes_and_prefixes(nodes)
-    #     output = output.serialize(format='turtle')
-    #     # Add dbr prefix, as the OWL file does not contain the resource triples
-    #     output = "@prefix dbr: <http://dbpedia.org/resource/> .\n" + output
-    #     return output
-    
 
     def process_query(self, text, max_k=10):
         if isinstance(text, str): text = [text]

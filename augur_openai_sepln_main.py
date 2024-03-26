@@ -6,19 +6,19 @@ from openai import OpenAI
 load_dotenv()
 OPENAI_API_KEY =  os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
-tqdm.pandas()
 
 import pandas as pd
 import Augur.context_templates as ctx
 
 from tqdm import tqdm
+tqdm.pandas()
 
 from Augur import (model, rag, utils, db_endpoint)
-from Augur.agent_templates import StanzaTaggingAgent, OpenAITaggingAgent
+from Augur.agent_templates import StanzaTaggingAgent, OpenAITaggingAgent, OpenAIStanzaTaggingAgent
 
 
 
-MODEL_ID = 'codellama/CodeLlama-13b-Instruct-hf'
+MODEL_ID = 'ChatGPT_3.5'
 #MODEL_ID = "deepseek-ai/deepseek-coder-6.7b-instruct"
 EMB_MODEL_ID = "sentence-transformers/all-mpnet-base-v2"
 MAX_NEW_TOKENS = 500
@@ -39,7 +39,7 @@ def preprocess(output):
         _result.add('error')
     return _result
 
-def process_query(row, chat_code_agent, query_pipeline):
+def process_query(row, chat_code_agent):
     try:
         conversation = model.conversation_init_dict(
             chat_code_agent,
@@ -58,18 +58,21 @@ def process_query(row, chat_code_agent, query_pipeline):
         gold_std = preprocess(eval(db_endpoint.send_consult(row['sparql_query'])))
         success = prediction == gold_std
         validity = 0 if 'error' in prediction else 1
+        error = 0
     except Exception as e:
         print(e)
         success = False
         validity = 0
+        error = 1
 
     return pd.Series({
         'model': MODEL_NAME,
-        'method': "agent_GEN_FSRAG",
+        'method': "agent_POS_FS",
         'consult': result_code,
-        'prompt': result[1]['content'],
+        'prompt': conversation[1]['content'],
         'validity': validity,
         'success': success,
+        'error':error
     })
 
 
@@ -91,7 +94,7 @@ def main():
         df_train["sparql_query"].to_list()
     )
 
-    agent = GenerativeTaggingAgent(model_id=MODEL_ID)
+    agent = OpenAIStanzaTaggingAgent()
 
     chat_code_agent = ctx.PromptLlamaCode(
         schema_rag=ontology_db, 
@@ -101,18 +104,15 @@ def main():
     
     os.makedirs(f'{MODEL_NAME}sepln', exist_ok=True)
 
-    # Instantiate conversational tools and prompt manager
-    query_pipeline = model.conversational_pipeline(MODEL_ID, MAX_NEW_TOKENS)
-
     results_df = df_test.progress_apply(lambda x: process_query(
         row=x, 
-        chat_code_agent=chat_code_agent, 
-        query_pipeline=query_pipeline), axis=1)
+        chat_code_agent=chat_code_agent), axis=1)
 
     # Save to disk
-    results_df.to_csv(f"{MODEL_NAME}sepln/{MODEL_NAME}_AgentGen_FSRAG_k5.csv")
+    results_df.to_csv(f"{MODEL_NAME}sepln/{MODEL_NAME}_AgentPOS_FS_k5.csv")
     print(sum(results_df['success'].astype(int)))
     print(sum(results_df['validity'].astype(int)))
+    print(sum(results_df['error'].astype(int)))
 
 if __name__ == '__main__':
     main()

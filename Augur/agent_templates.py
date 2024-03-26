@@ -84,6 +84,42 @@ class StanzaTaggingAgent(Agent):
 
         return output
 
+class OpenAIStanzaTaggingAgent(StanzaTaggingAgent):
+    def __init__(self):
+        stanza.download("en")
+        spacy.require_cpu()
+        self.nlp = spacy_stanza.load_pipeline("en", use_gpu=False)
+    
+    def get_definitions(self, tag_list):
+        agg_output = dict()
+        for element in tag_list:
+            conversation = [
+                {
+                    'role': 'system',
+                    'content': (
+                        "###You are a helpful, respectful and honest assistant expert coding,"
+                        " ontologies and semantic web. ONLY give the answer to the task."
+                        "\n# EXAMPLE: Aviation\n Aviation the activity of flying aircraft, "
+                        "or of designing, producing, and keeping them in good condition."
+                    )
+                },
+                {
+                    'role': 'user',
+                    'content': (
+                        f"Write a rdfs:comment suitable for the meaning of this"
+                        f" dbpedia ontology identifier: {element}. Be succint."
+                    )
+                }
+            ]
+            result = client.chat.completions.create(
+                    model = "gpt-3.5-turbo-0125",
+                    messages = conversation,
+                    temperature = 0,
+                )
+            output  = result.choices[0].message.content.strip('"')
+            agg_output[element] = output
+        return agg_output
+    
 
 class GenerativeTaggingAgent(Agent):
     def __init__(self, model_id):

@@ -10,10 +10,11 @@ class PromptTemplate(ABC):
 
 
 class PromptLlamaCode(PromptTemplate):
-    SYSTEM = ("You are a helpful, respectful and honest assistant expert coding"
-              " in SparQL, ontologies and semantic web. Always DO answer the code in SparQL that retrieves the "
-              "information asked. DO enclose the code in a code block:\n```\ncode\n```\n).\n"
-              )
+    SYSTEM = (
+        "You are a helpful, respectful and honest assistant expert coding"
+        " in SparQL, ontologies and semantic web. Always DO answer the code in SparQL that retrieves the "
+        "information asked. DO enclose the code in a code block:\n```\ncode\n```\n).\n"
+    )
     
     SCHEMA = '###Sample Identifiers from Database Schema.\n # These identifiers are examples of what you might encounter in the database and are provided to assist in query construction. They represent a subset of the possible entities and relationships in the full schema:\n{schema}\n\n'
     
@@ -128,7 +129,7 @@ ASK WHERE { <http://dbpedia.org/resource/Toyota_Verossa> <http://dbpedia.org/ont
             prompt.append(
                 self.SCHEMA.format(
                     schema=self.schema_rag.process_query(user_query),
-                    max_k=10
+                    max_k=5
                 )
             )
         elif self.agent:

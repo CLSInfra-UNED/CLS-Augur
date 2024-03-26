@@ -182,7 +182,7 @@ def conversational_pipeline(model_id, max_new_tokens=500):
         torch_dtype=torch.float16,
         max_new_tokens=max_new_tokens,
         device_map="auto",
-        streamer=TextStreamer(tokenizer)
+        #streamer=TextStreamer(tokenizer)
     )
 
     

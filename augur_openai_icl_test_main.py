@@ -37,8 +37,8 @@ def main():
     ]
 
     # Instantiate rag db objects
-    ontology_db = rag.GraphRag(EMB_MODEL_ID, ontology_files)
-    queries_db = rag.SparQLRag(
+    ontology_db = rag.GraphRAG(EMB_MODEL_ID, ontology_files)
+    queries_db = rag.SparQLRAG(
         EMB_MODEL_ID,
         df_train["corrected_question"].to_list(),
         df_train["sparql_query"].to_list()
