@@ -6,8 +6,8 @@ from abc import ABC, abstractmethod
 from functools import lru_cache
 from langchain_community.vectorstores.chroma import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from rdflib import Graph
-from rdflib.namespace import RDFS
+from rdflib import Graph, Namespace
+from rdflib.namespace import RDFS, RDF
 
 
 @lru_cache(maxsize=1)
@@ -97,16 +97,41 @@ class GraphRAG(RAGBase):
                     continue
                 connected_graph.add((subj, pred, obj))
 
+        # prefixes_to_unbind = [prefix for prefix, _ in connected_graph.namespace_manager.namespaces()]
+        # for prefix in prefixes_to_unbind:
+        #     connected_graph.namespace_manager.bind(prefix, None, replace=True)
         # for prefix, namespace in self.graph.namespaces():
         #     connected_graph.bind(prefix, namespace)
 
         return connected_graph
     
+    # def _get_connected_nodes_and_prefixes(self, node):
+    #     connected_nodes = set()
+    #     for subj, pred, obj in self.graph:
+    #         if str(subj) in node:
+    #             connected_nodes.add(subj)
+    #             #connected_nodes.add(obj)
+    #         # if str(obj) in node:
+    #         #     connected_nodes.add(subj)
+    #     connected_graph = Graph()
+    #     for subj, pred, obj in self.graph:
+    #         if subj in connected_nodes:
+    #             if (pred == RDFS.label and obj.language != 'en' or
+    #                     pred == RDFS.comment and (obj.language and obj.language != 'en')):
+    #                 continue
+    #             connected_graph.add((subj, pred, obj))
 
+    #     # prefixes_to_unbind = [prefix for prefix, _ in connected_graph.namespace_manager.namespaces()]
+    #     # for prefix in prefixes_to_unbind:
+    #     #     connected_graph.namespace_manager.bind(prefix, None, replace=True)
+    #     # for prefix, namespace in self.graph.namespaces():
+    #     #     connected_graph.bind(prefix, namespace)
+
+    
+    
     def process_query(self, text, max_k=10):
         if isinstance(text, str): text = [text]
 
-        k = max(1,max_k//len(text))
         k = math.ceil(max_k/len(text))
 
         output = [self.raw_rag_output(definition, k=k) for definition in text]

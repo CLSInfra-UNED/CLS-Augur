@@ -67,7 +67,7 @@ def process_query(row, chat_code_agent):
 
     return pd.Series({
         'model': MODEL_NAME,
-        'method': "agent_POS_FS",
+        'method': "agent_GEN_FSRAG",
         'consult': result_code,
         'prompt': conversation[1]['content'],
         'validity': validity,
@@ -109,7 +109,7 @@ def main():
         chat_code_agent=chat_code_agent), axis=1)
 
     # Save to disk
-    results_df.to_csv(f"{MODEL_NAME}sepln/{MODEL_NAME}_AgentPOS_FS_k5.csv")
+    results_df.to_csv(f"{MODEL_NAME}sepln/{MODEL_NAME}_AgentPOS_FS_k5_ap2_resources.csv")
     print(sum(results_df['success'].astype(int)))
     print(sum(results_df['validity'].astype(int)))
     print(sum(results_df['error'].astype(int)))

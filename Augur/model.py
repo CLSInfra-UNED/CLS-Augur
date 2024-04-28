@@ -6,6 +6,8 @@ Parts of this code use resources from Meta and as such is governed by the orgini
 import os
 
 import torch
+import accelerate 
+from accelerate import Accelerator
 
 from functools import lru_cache
 from threading import Thread
@@ -167,8 +169,9 @@ def load_quant_model(model_id):
         quantization_config=bnb_config,
         device_map='auto',
     )
+    
     tokenizer = _get_tokenizer_with_system_prompt(model_id)
-
+    
     return model, tokenizer
 
 

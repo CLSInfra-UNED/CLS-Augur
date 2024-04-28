@@ -22,6 +22,16 @@ def send_consult(text):
         result = [f'output error: {e}']
     return str(result) if result else 'none'
 
+def send_consult_json(text):
+    sparql.setQuery(text)
+    sparql.setReturnFormat(JSON)
+    try:
+        result = sparql.queryAndConvert()
+    except Exception as e:
+        print('Error in db output')
+        result = dict()
+    return result if result else dict()
+
 def send_consult_convert(text):
     sparql.setQuery(text)
     sparql.setReturnFormat(JSON)

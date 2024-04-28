@@ -14,15 +14,37 @@ from Augur.agent_templates import StanzaTaggingAgent, GenerativeTaggingAgent
 from torch import cuda
 from transformers import Conversation
 
-from rdflib import Graph
+
+from rdflib import Graph, RDFS
 tqdm.pandas()
 
 MODEL_ID = 'codellama/CodeLlama-13b-Instruct-hf'
 #MODEL_ID = "deepseek-ai/deepseek-coder-6.7b-instruct"
 EMB_MODEL_ID = "sentence-transformers/all-mpnet-base-v2"
-MAX_NEW_TOKENS = 500
+MAX_NEW_TOKENS = 512
 TEMP = 1e-10
 MODEL_NAME = MODEL_ID.split('/')[-1]
+
+def cheating_with_resources(ids, dbpedia_graph):
+    # connected_nodes = set()
+    # for subj, pred, obj in dbpedia_graph:
+    #     if str(subj) in ids:
+    #         connected_nodes.add(subj)
+    #         connected_nodes.add(obj)
+    #     # if str(obj) in node:
+    #     #     connected_nodes.add(subj)
+    # connected_graph = Graph()
+    # for subj, pred, obj in dbpedia_graph:
+    #     if subj in connected_nodes:
+    #         if (pred == RDFS.label and obj.language != 'en' or
+    #                 pred == RDFS.comment and (obj.language and obj.language != 'en')):
+    #             continue
+    #         connected_graph.add((subj, pred, obj))
+    # output = connected_graph.serialize(format='turtle')
+    # output = output + ' '.join([f'<{idss}> \n' for idss in ids if 'resource' in idss])
+
+    output =  ' '.join([f'<{idss}> \n' for idss in ids if 'resource' in idss])
+    return output
 
 def preprocess(output):
     _result = set()
@@ -38,7 +60,7 @@ def preprocess(output):
         _result.add('error')
     return _result
 
-def process_query(row, chat_code_agent, query_pipeline):
+def process_query(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_graph):
     try:
         conversation = model.conversation_init(
             chat_code_agent,
@@ -46,14 +68,14 @@ def process_query(row, chat_code_agent, query_pipeline):
             few_shot=True,
             cot=False,
             rag=False,
+            #cheating=cheating_with_resources(row.identifiers_resource, dbpedia_graph=dbpedia_graph)
         )
         result = query_pipeline(
             conversation,
             do_sample=False,
-            top_k=1,
-            #temperature=TEMP,
             max_new_tokens=MAX_NEW_TOKENS
         )
+        
         result_code = utils.capture_code(result.generated_responses[-1])
         prediction = preprocess(eval(db_endpoint.send_consult(result_code)))
         gold_std = preprocess(eval(db_endpoint.send_consult(row['sparql_query'])))
@@ -61,10 +83,15 @@ def process_query(row, chat_code_agent, query_pipeline):
         validity = 0 if 'error' in prediction else 1
         error = 0
     except Exception as e:
-        print(e)
+        print('Error durin inference: ',e)
         success = False
         validity = 0
         error = 1
+
+    global greedy_acc
+    greedy_acc+=success
+
+    print("Greedy: ", greedy_acc)
 
     return pd.Series({
         'model': MODEL_NAME,
@@ -76,8 +103,7 @@ def process_query(row, chat_code_agent, query_pipeline):
         'error':error
     })
 
-def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set):
-    #def process_query_helper():
+def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_graph):
 
     try:
         conversation_list = model.conversation_init_dict(
@@ -86,6 +112,7 @@ def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set
             few_shot=True,
             cot=False,
             rag=False,
+            #cheating=cheating_with_resources(row.identifiers_resource, dbpedia_graph=dbpedia_graph)
         )
         conversation = Conversation()
         conversation.add_message(conversation_list[0])
@@ -139,7 +166,7 @@ def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set
         temperature=0.7,
         top_k=20,
         max_new_tokens=MAX_NEW_TOKENS,
-        batch_size=3
+        batch_size=2
     )
     _result_code_sc = [utils.capture_code(conv_result.generated_responses[-1]) for conv_result in result_sc] 
     #sc_outputs.append(_result_code_sc)
@@ -199,12 +226,12 @@ def main():
     ontology_set = {str(element) for triple in dbpedia_graph for element in triple if
             'http://dbpedia.org/' in element}
 
-    #agent = StanzaTaggingAgent(model_id=MODEL_ID)
+    agent = GenerativeTaggingAgent(model_id=MODEL_ID)
 
     chat_code_agent = ctx.PromptLlamaCode(
         schema_rag=ontology_db, 
         sparql_rag=queries_db, 
-        #agent=agent
+        agent=agent
     )
     
     os.makedirs(f'{MODEL_NAME}sepln', exist_ok=True)
@@ -216,12 +243,21 @@ def main():
     global sc_acc
     global sample_acc
     greedy_acc = sc_acc = sample_acc = 0
+
+    import re
+
+    pattern = r'<(http[s]?://(?!dbpedia\.org/resource/)[^ >]*dbpedia\.org/[^ >]*)>'
+    pattern_with_resources =  r'<(http[s]?://dbpedia\.org/[^ >]*)>'
+
+    df_test['identifiers'] = df_test.sparql_query.apply( lambda x : set(re.findall(pattern, x)))
+    df_test['identifiers_resource'] = df_test.sparql_query.apply( lambda x : set(re.findall(pattern_with_resources, x)))
  
-    results_df = df_test.progress_apply(lambda x: process_query_consistency(
+    results_df = df_test.progress_apply(lambda x: process_query(
         row=x, 
         chat_code_agent=chat_code_agent, 
         query_pipeline=query_pipeline,
-        ontology_set=ontology_set), axis=1)
+        ontology_set=ontology_set,
+        dbpedia_graph=dbpedia_graph), axis=1)
 
     # Save to disk
     results_df.to_csv(f"{MODEL_NAME}sepln/{MODEL_NAME}_SC.csv")
