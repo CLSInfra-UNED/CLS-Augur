@@ -1,50 +1,27 @@
-import re
-import gc
 import os 
+import re
 
 import pandas as pd
 import Augur.context_templates as ctx
 
 from tqdm import tqdm
 from torch.cuda import empty_cache
+from torch import cuda
+from transformers import Conversation
+from rdflib import Graph, RDFS
 
 from Augur import (model, rag, utils, db_endpoint)
 from Augur.agent_templates import StanzaTaggingAgent, GenerativeTaggingAgent
 
-from torch import cuda
-from transformers import Conversation
-
-
-from rdflib import Graph, RDFS
 tqdm.pandas()
 
+
 MODEL_ID = 'codellama/CodeLlama-13b-Instruct-hf'
-#MODEL_ID = "deepseek-ai/deepseek-coder-6.7b-instruct"
 EMB_MODEL_ID = "sentence-transformers/all-mpnet-base-v2"
 MAX_NEW_TOKENS = 512
 TEMP = 1e-10
 MODEL_NAME = MODEL_ID.split('/')[-1]
 
-def cheating_with_resources(ids, dbpedia_graph):
-    # connected_nodes = set()
-    # for subj, pred, obj in dbpedia_graph:
-    #     if str(subj) in ids:
-    #         connected_nodes.add(subj)
-    #         connected_nodes.add(obj)
-    #     # if str(obj) in node:
-    #     #     connected_nodes.add(subj)
-    # connected_graph = Graph()
-    # for subj, pred, obj in dbpedia_graph:
-    #     if subj in connected_nodes:
-    #         if (pred == RDFS.label and obj.language != 'en' or
-    #                 pred == RDFS.comment and (obj.language and obj.language != 'en')):
-    #             continue
-    #         connected_graph.add((subj, pred, obj))
-    # output = connected_graph.serialize(format='turtle')
-    # output = output + ' '.join([f'<{idss}> \n' for idss in ids if 'resource' in idss])
-
-    output =  ' '.join([f'<{idss}> \n' for idss in ids if 'resource' in idss])
-    return output
 
 def preprocess(output):
     _result = set()
@@ -60,6 +37,7 @@ def preprocess(output):
         _result.add('error')
     return _result
 
+
 def process_query(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_graph):
     try:
         conversation = model.conversation_init(
@@ -68,8 +46,8 @@ def process_query(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_gr
             few_shot=True,
             cot=False,
             rag=False,
-            #cheating=cheating_with_resources(row.identifiers_resource, dbpedia_graph=dbpedia_graph)
         )
+
         result = query_pipeline(
             conversation,
             do_sample=False,
@@ -88,11 +66,6 @@ def process_query(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_gr
         validity = 0
         error = 1
 
-    global greedy_acc
-    greedy_acc+=success
-
-    print("Greedy: ", greedy_acc)
-
     return pd.Series({
         'model': MODEL_NAME,
         'method': "agent_POS_FSRAG",
@@ -103,6 +76,7 @@ def process_query(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_gr
         'error':error
     })
 
+
 def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set, dbpedia_graph):
 
     try:
@@ -112,8 +86,8 @@ def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set
             few_shot=True,
             cot=False,
             rag=False,
-            #cheating=cheating_with_resources(row.identifiers_resource, dbpedia_graph=dbpedia_graph)
         )
+
         conversation = Conversation()
         conversation.add_message(conversation_list[0])
         conversation.add_message(conversation_list[1])
@@ -137,22 +111,6 @@ def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set
         validity = 0
         error = 1
 
-    # conversation = Conversation()
-    # conversation.add_message(conversation_list[0])
-    # conversation.add_message(conversation_list[1])
-    
-    # result_single = query_pipeline(
-    #     conversation,
-    #     do_sample=True,
-    #     #top_k=20,
-    #     temperature=0.9,
-    #     max_new_tokens=MAX_NEW_TOKENS
-    # )
-    # _result_code = utils.capture_code(result_single.generated_responses[-1])
-    # _prediction = preprocess(eval(db_endpoint.send_consult(_result_code)))
-    # _success = _prediction == gold_std
-
-    sc_outputs = []
     conversation_sc_list = []
     for _ in range(20):
         conversation = Conversation()
@@ -169,25 +127,12 @@ def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set
         batch_size=2
     )
     _result_code_sc = [utils.capture_code(conv_result.generated_responses[-1]) for conv_result in result_sc] 
-    #sc_outputs.append(_result_code_sc)
 
     result_code_sc = utils.self_consistency(_result_code_sc, ontology_set)
     prediction_sc = preprocess(eval(db_endpoint.send_consult(result_code_sc)))
     success_sc = prediction_sc == gold_std
     print('sc',prediction_sc, gold_std, success_sc)
     validity_sc = 0 if 'error' in prediction_sc else 1
-
-    global greedy_acc
-    global sc_acc
-    global sample_acc
-
-    greedy_acc+=success
-    sc_acc+=success_sc
-    #sample_acc+=_success
-
-    print(f"Greedy: {greedy_acc}")
-    print(f"Self-C: {sc_acc}")
-    print(f"Sample: {sample_acc}")
 
     return pd.Series({
         'model': MODEL_NAME,
@@ -199,8 +144,8 @@ def process_query_consistency(row, chat_code_agent, query_pipeline, ontology_set
         'consult_sc': result_code_sc,
         'validity_sc': validity_sc,
         'success_sc': success_sc,
-        #'success_sample' : _success
     })
+
 
 def main():
 
@@ -238,26 +183,23 @@ def main():
 
     # Instantiate conversational tools and prompt manager
     query_pipeline = model.conversational_pipeline(MODEL_ID, MAX_NEW_TOKENS)
-    
-    global greedy_acc
-    global sc_acc
-    global sample_acc
-    greedy_acc = sc_acc = sample_acc = 0
-
-    import re
 
     pattern = r'<(http[s]?://(?!dbpedia\.org/resource/)[^ >]*dbpedia\.org/[^ >]*)>'
     pattern_with_resources =  r'<(http[s]?://dbpedia\.org/[^ >]*)>'
 
-    df_test['identifiers'] = df_test.sparql_query.apply( lambda x : set(re.findall(pattern, x)))
-    df_test['identifiers_resource'] = df_test.sparql_query.apply( lambda x : set(re.findall(pattern_with_resources, x)))
+    df_test['identifiers'] = df_test.sparql_query.apply(lambda x : set(re.findall(pattern, x)))
+    df_test['identifiers_resource'] = df_test.sparql_query.apply(lambda x : set(re.findall(pattern_with_resources, x)))
  
-    results_df = df_test.progress_apply(lambda x: process_query(
-        row=x, 
-        chat_code_agent=chat_code_agent, 
-        query_pipeline=query_pipeline,
-        ontology_set=ontology_set,
-        dbpedia_graph=dbpedia_graph), axis=1)
+    results_df = df_test.progress_apply(
+        lambda x: process_query(
+            row=x,
+            chat_code_agent=chat_code_agent,
+            query_pipeline=query_pipeline,
+            ontology_set=ontology_set,
+            dbpedia_graph=dbpedia_graph
+        ),
+        axis=1
+    )
 
     # Save to disk
     results_df.to_csv(f"{MODEL_NAME}sepln/{MODEL_NAME}_SC.csv")
